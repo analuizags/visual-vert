@@ -68,21 +68,21 @@
     
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse mt-4 pl-2">
-                <div class="sidebar-sticky pt-3">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse pl-2">
+                <div class="sidebar-sticky pt-3 mt-3">
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-muted">
                         <span>IF Goiano</span>
                     </h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#coisa">
                                 <span data-feather="award"></span>
                                 Alguma coisa 
                                 <!-- falar bem -->
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#lei">
                                 <span data-feather="file-text"></span>
                                 Lei de criação
                                 <!-- verticalização faz parte de finalidade e caracteristicas -->
@@ -95,19 +95,19 @@
                     </h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#conceito">
                                 <span data-feather="help-circle"></span>
                                 Conceito 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#variacoes">
                                 <span data-feather="layers"></span>
                                 Variações
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#calculo">
                                 <span data-feather="percent"></span>
                                 Cálculo
                             </a>
@@ -119,14 +119,14 @@
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#dataset">
                                 <span data-feather="database"></span>
                                 Dataset 
                                 <!-- Falar os anos, campus, áreas do conhecimento segundo não sei o que -->
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#diagrama">
                                 <span data-feather="grid"></span>
                                 Diagrama
                             </a>
@@ -143,7 +143,23 @@
                     </div>
                 </div>
                 
-                <div class="card shadow-sm ml-3 mr-3">
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="coisa">
+                    <div class="card-body">
+                        <h1 class="h2 mb-4">Alguma coisa</h1>
+                        <a class="green ribbon">IF Goiano</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit 
+                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                        occaecat cupidatat non proident, sunt in culpa qui officia 
+                        deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="lei">
                     <div class="card-body">
                         <h1 class="h2 mb-4">Lei de criação</h1>
                         <a class="green ribbon">IF Goiano</a>
@@ -156,6 +172,93 @@
                         occaecat cupidatat non proident, sunt in culpa qui officia 
                         deserunt mollit anim id est laborum.
                         </p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="conceito">
+                    <div class="card-body">
+                        <h1 class="h2 mb-4">Conceito</h1>
+                        <a class="red ribbon">Verticalização</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit 
+                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                        occaecat cupidatat non proident, sunt in culpa qui officia 
+                        deserunt mollit anim id est laborum.
+                        </p>
+
+                        <div class="text-center">
+                            <img width="400" src="assets/imagens/fluxograma.svg" class="img-fluid mt-2 mb-2" alt="Fluxograma">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="variacoes">
+                    <div class="card-body">
+                        <h1 class="h2 mb-4">Variações</h1>
+                        <a class="red ribbon">Verticalização</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit 
+                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                        occaecat cupidatat non proident, sunt in culpa qui officia 
+                        deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="calculo">
+                    <div class="card-body">
+                        <h1 class="h2 mb-4">Cálculo</h1>
+                        <a class="red ribbon">Verticalização</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit 
+                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                        occaecat cupidatat non proident, sunt in culpa qui officia 
+                        deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="dataset">
+                    <div class="card-body">
+                        <h1 class="h2 mb-4">Dataset</h1>
+                        <a class="blue ribbon">Dados</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit 
+                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                        occaecat cupidatat non proident, sunt in culpa qui officia 
+                        deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+                <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="diagrama">
+                    <div class="card-body">
+                        <h1 class="h2 mb-4">Diagrama</h1>
+                        <a class="blue ribbon">Dados</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit 
+                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                        occaecat cupidatat non proident, sunt in culpa qui officia 
+                        deserunt mollit anim id est laborum.
+                        </p>
+
+                        <div class="text-center">
+                            <img width="900" src="assets/imagens/diagrama.svg" class="img-fluid mt-2 mb-2" alt="Diagrama">
+                        </div>
                     </div>
                 </div>
             </main>

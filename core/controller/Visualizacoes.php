@@ -76,6 +76,7 @@ class Visualizacoes {
                     m.situacao,
                     c.codigo AS codCurso,
                     c.descricao AS descCurso,
+                    c.nivel AS nivelCurso,
                     ac.codigo AS codAreaConhecimento,
                     ac.descricao AS descAreaConhecimento,
                     i.codigo AS codInstituicao,
@@ -123,7 +124,7 @@ class Visualizacoes {
                 for ($j=$i+1; $j < count($dadosAluno); $j++) { 
                     echo "<br>" . $dadosAluno[$i]->descCurso . " -> " . $dadosAluno[$j]->descCurso;
 
-                    // if ($dadosAluno[$i]->descCurso < $dadosAluno[$j]->descCurso) { // se subir de nível
+                    // if ($dadosAluno[$i]->nivelCurso < $dadosAluno[$j]->nivelCurso) { // se subir de nível
                         
                     //     if (in_array($dadosAluno[$i]->situacao, $concluido)) {
                             
@@ -149,7 +150,7 @@ class Visualizacoes {
 
                     // }
 
-                    /*
+                    /* Exemplo do array com dados após o cálculo
                     $grafico = [
                         'eixo' => [
                             'total' => nº,
