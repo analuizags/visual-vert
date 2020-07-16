@@ -12,6 +12,8 @@
 
     <!-- Estilo próprio -->
     <link rel="stylesheet" href="assets/css/estilo.css">
+    <!-- <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="assets/css/multiple-select.css">
     
     <title>Visualização da Verticalização</title>
 </head>
@@ -32,7 +34,7 @@
         $opcoesFiltro = $visualizacoes->opcoesFiltro();
 
         // echo "<pre>";
-        // print_r($opcoesFiltro["instituicoes"]);  
+        // print_r($opcoesFiltro);  
 
     ?>
 
@@ -47,9 +49,9 @@
 
         <ul class="navbar-nav px-3 ml-auto">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="glossario.php">
                     <span data-feather="book" class="mr-1"></span>
-                    Dicionário
+                    Glossário
                 </a>
             </li>
         </ul>
@@ -86,10 +88,10 @@
                                         <input type="checkbox" class="custom-control-input" id="switchAno" checked>
                                         <label class="custom-control-label" for="switchAno">Períodos</label>
                                     </div> -->
-                                    <label class="ml-1">Períodos</label>
-                                    <select class="custom-select custom-select-sm" id="ano">
-                                        <option value="1">Nenhum</option>
-                                        <option value="0" selected>Todos</option>
+                                    <label class="ml-1">Períodos</label><br>
+                                    <select data-placeholder="Escolha o período" class="mp-select" id="ano" multiple="multiple">
+                                        <!-- <option value="1">Nenhum</option>
+                                        <option value="0" selected>Todos</option> -->
                                         <?php 
                                             if (count((array)$opcoesFiltro["periodos"][0]) > 0) {
                                                 foreach ($opcoesFiltro["periodos"] as $key => $value) {
@@ -102,10 +104,10 @@
                             </li>
                             <li class="nav-item">
                                 <span class="nav-link">
-                                    <label class="ml-1">Gênero</label>
-                                    <select class="custom-select custom-select-sm" id="sexo">
-                                        <option value="1">Nenhum</option>
-                                        <option value="0" selected>Todos</option>
+                                    <label class="ml-1">Gênero</label><br>
+                                    <select data-placeholder="Escolha o gênero" class="mp-select" id="sexo" multiple="multiple">
+                                        <!-- <option value="1">Nenhum</option>
+                                        <option value="0" selected>Todos</option> -->
                                         <option value="F">Feminino</option>
                                         <option value="M">Masculino</option>
                                     </select>
@@ -113,10 +115,10 @@
                             </li>
                             <li class="nav-item">
                                 <span class="nav-link">
-                                    <label class="ml-1">Instituicao</label>
-                                    <select class="custom-select custom-select-sm" id="campus">
-                                        <option value="1">Nenhum</option>
-                                        <option value="0" selected>Todos</option>
+                                    <label class="ml-1">Unidade de Ensino</label><br>
+                                    <select data-placeholder="Escolha o campus" class="mp-select" id="campus" multiple="multiple">
+                                        <!-- <option value="1">Nenhum</option>
+                                        <option value="0" selected>Todos</option> -->
                                         <?php 
                                             if (count((array)$opcoesFiltro["instituicoes"][0]) > 0) {
                                                 foreach ($opcoesFiltro["instituicoes"] as $key => $value) {
@@ -129,10 +131,10 @@
                             </li>
                             <li class="nav-item">
                                 <span class="nav-link">
-                                    <label class="ml-1">Área do Conhecimento</label>
-                                    <select class="custom-select custom-select-sm" id="area">
-                                        <option value="1" selected>Nenhum</option>
-                                        <option value="0">Todos</option>
+                                    <label class="ml-1">Área do Conhecimento</label><br>
+                                    <select data-placeholder="Escolha a área" class="mp-select" id="area" multiple="multiple">
+                                        <!-- <option value="1" selected>Nenhum</option>
+                                        <option value="0">Todos</option> -->
                                         <?php 
                                             if (count((array)$opcoesFiltro["areas"][0]) > 0) {
                                                 foreach ($opcoesFiltro["areas"] as $key => $value) {
@@ -180,60 +182,99 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
                     <h1 class="h2 titulo">Visualização</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <!-- <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                        </div> -->
 
                         <select class="custom-select custom-select-sm">
-                            <option selected value="1">Geral</option>
-                            <option value="2">Eficiente</option>
-                            <option value="3">Não concluídos</option>
+                            <option selected value="1">Independente de Eixo</option>
+                            <option value="2">Mesmo Eixo</option>
+                            <option value="3">Fora do Eixo</option>
                         </select>
 
-                        <!-- <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span data-feather="database"></span>
-                                Tipos
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Geral</a>
-                                <a class="dropdown-item" href="#">Eficiente</a>
-                                <a class="dropdown-item" href="#">Não Concluídos</a>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
 
                 <!-- <div id="aqui" style="border-stye:solid; width:100%; height:500px; display:flex"></div> -->
-                <canvas class="my-4 w-100 p-3" id="myChart" width="900" height="380"></canvas>
-
-                <h2 class="mb-3 mt-3 titulo">Detalhamento</h2>
+                <canvas class="my-4 w-85" id="myChart" width="850" height="400"></canvas>
+                
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-2 mt-4">
+                    <h2 class="titulo">Detalhamento</h2>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <select class="custom-select custom-select-sm">
+                            <option selected value="1">Em Fluxo</option>
+                            <option value="2">Não Concluída</option>
+                            <option value="3">Concluída</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="table-responsive">
-                    <table class="table table-striped table-sm">
+                    <table class="table table-striped table-md">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Header</th>
-                                <th>Header</th>
-                                <th>Header</th>
-                                <th>Header</th>
+                                <th scope="col">Unidade de Ensino</th>
+                                <th scope="col">Área de Conhecimento</th>
+                                <th scope="col">2015</th>
+                                <th scope="col">2016</th>
+                                <th scope="col">2017</th>
+                                <th scope="col">2018</th>
+                                <th scope="col">2019</th>
+                                <th scope="col">2020</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1,013</td>
-                                <td>torquent</td>
-                                <td>per</td>
-                                <td>conubia</td>
-                                <td>nostra</td>
+                                <td scope="row" rowspan="2" class="align-middle">Ceres</td>
+                                <td>Exatas</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
                             </tr>
                             <tr>
-                                <td>1,014</td>
-                                <td>per</td>
-                                <td>inceptos</td>
-                                <td>himenaeos</td>
-                                <td>Curabitur</td>
+                                <td>Biológicas</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" rowspan="4" class="align-middle">Rio Verde</td>
+                                <td>Exatas</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                            </tr>
+                            <tr>
+                                <td>Biológicas</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                            </tr>
+                            <tr>
+                                <td>Engenharias</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                            </tr>
+                            <tr>
+                                <td>Sociais e Aplicadas</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
+                                <td>12%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -251,6 +292,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="assets/js/multiple-select.js"></script>
     <script src="assets/js/visualizacao.js"></script>
 
 </body>

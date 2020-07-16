@@ -132,7 +132,7 @@ class CRUD {
         $sql .= $where_condicao != null ? "WHERE " . $where_condicao . " " : "";
         $sql .= $group_by != null ? "GROUP BY " . $group_by . " " : "";
         $sql .= $ordem != null ? "ORDER BY " . $ordem . " " : "";
-
+// echo "<br>$sql<br>";
         //Armazena a consulta SQL para verificação
         $this->ultimo_sql = $sql;
 

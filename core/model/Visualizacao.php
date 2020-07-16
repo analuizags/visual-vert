@@ -32,27 +32,96 @@ class Visualizacao extends CRUD {
         }
         
         $campos = $campos != null ? $campos : "*";
-        $ordem = $ordem != null ? $ordem : $campos . " ASC";
-        $where_condicao = "1 = 1";
-        $where_valor = [];
+        $whereCondicao = "1 = 1";
+        $whereValor = [];
+        $groupBy = $assunto == 'codigos' ? " aluno HAVING count(aluno) > 1 " : null;
 
 
         if ($campos == 'anoLetInicio') {
-            $where_condicao .= " AND " . self::COL_ANO_INICIO . " >= ?";
-            $where_valor[] = '2015';
-
-            $where_condicao .= " AND " . self::COL_ANO_INICIO . " <= ?";
-            $where_valor[] = '2020';
+            $whereCondicao .= " AND " . self::COL_ANO_INICIO . " >= ?";
+            $whereValor[] = '2015';
         }
 
-        $campos = $assunto == 'filtro' ? "DISTINCT $campos" : "";
+        if ($assunto == 'filtro') {
+            $campos = "DISTINCT $campos";
+            $tabela = self::TABELA;
+        } else {
+            $tabela = "matricula m
+                        INNER JOIN aluno a ON m.aluno = a.codigo
+                        INNER JOIN curso c ON m.curso = c.codigo
+                        INNER JOIN areaConhecimento ac ON c.areaConhecimento = ac.codigo
+                        INNER JOIN instituicao i ON m.instituicao = i.codigo";
+        }
 
+        if (count((array)$busca) > 0) {
+            if (isset($busca['anoLetInicio']) && !empty($busca['anoLetInicio']) && count($busca['anoLetInicio']) != 6) {
+                $whereCondicao .= " AND m.anoLetInicio IN (";
+
+                for ($i=0; $i < count($busca['anoLetInicio'])-1; $i++) { 
+                    $whereCondicao .= "?, ";
+                    $whereValor[] = $busca['anoLetInicio'][$i];
+                }
+
+                $whereCondicao .= " ?)";
+                $whereValor[] = end($busca['anoLetInicio']);
+            }
+
+            if (isset($busca['codAreaConhecimento']) && !empty($busca['codAreaConhecimento']) && count($busca['codAreaConhecimento']) != 7) {
+                $whereCondicao .= " AND ac.codigo IN (";
+
+                for ($i=0; $i < count($busca['codAreaConhecimento'])-1; $i++) { 
+                    $whereCondicao .= "?, ";
+                    $whereValor[] = $busca['codAreaConhecimento'][$i];
+                }
+
+                $whereCondicao .= " ?)";
+                $whereValor[] = end($busca['codAreaConhecimento']);
+            }
+
+            if (isset($busca['codInstituicao']) && !empty($busca['codInstituicao']) && count($busca['codInstituicao']) != 12) {
+                $whereCondicao .= " AND i.codigo IN (";
+
+                for ($i=0; $i < count($busca['codInstituicao'])-1; $i++) { 
+                    $whereCondicao .= "?, ";
+                    $whereValor[] = $busca['codInstituicao'][$i];
+                }
+
+                $whereCondicao .= " ?)";
+                $whereValor[] = end($busca['codInstituicao']);
+            }
+
+            if (isset($busca['sexo']) && !empty($busca['sexo']) && count($busca['sexo']) != 2) {
+                $whereCondicao .= " AND a.sexo IN (";
+
+                for ($i=0; $i < count($busca['sexo'])-1; $i++) { 
+                    $whereCondicao .= "?, ";
+                    $whereValor[] = $busca['sexo'][$i];
+                }
+
+                $whereCondicao .= " ?)";
+                $whereValor[] = end($busca['sexo']);
+            }
+
+            if (isset($busca['aluno']) && !empty($busca['aluno'])) {
+                $whereCondicao .= " AND a.codigo IN (";
+
+                for ($i=0; $i < count($busca['aluno'])-1; $i++) { 
+                    $whereCondicao .= "?, ";
+                    $whereValor[] = $busca['aluno'][$i];
+                }
+
+                $whereCondicao .= " ?)";
+                $whereValor[] = end($busca['aluno']);
+            }
+        }    
+
+        // print_r($whereValor);
         $retorno = [];
 
         try {
-
-            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, $busca, $ordem);
-
+            
+            $retorno = $this->read($tabela, $campos, $whereCondicao, $whereValor, $groupBy, $ordem);
+            
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }

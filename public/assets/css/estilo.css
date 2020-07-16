@@ -110,3 +110,57 @@ body {
 .titulo {
     font-family: 'Open Sans', sans-serif;
 }
+
+.ribbon {
+    background: rgb(82, 82, 82);
+    border-radius: 3px 1.5px 0px 3px;
+    color: whitesmoke !important;
+    font-weight: 900;
+    font-size: .85em;
+    height: 26px;
+    padding: 4px;
+    padding-left: 11px !important;
+    position: absolute;
+    right: -15px;
+    top: 15px;
+    width: 85px;
+    z-index: 1000;
+}
+
+.ribbon:before {
+    border-left: 7px solid rgb(26, 26, 26);
+    border-right: 7px solid transparent;
+    border-top: 7px solid rgb(26, 26, 26);
+    border-bottom: 7px solid transparent;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 26px;
+}
+
+.green.ribbon {
+    background: rgb(1, 122, 1) !important;
+}
+
+.green.ribbon:before{
+    border-left: 7px solid rgb(0, 49, 0) !important;
+    border-top: 7px solid rgb(0, 49, 0) !important;
+}
+
+.blue.ribbon {
+    background: rgb(25, 25, 112) !important;
+}
+
+.blue.ribbon:before{
+    border-left: 7px solid rgb(11, 11, 41) !important;
+    border-top: 7px solid rgb(11, 11, 41) !important;
+}
+
+.red.ribbon {
+    background: rgb(185, 1, 1) !important;
+}
+
+.red.ribbon:before{
+    border-left: 7px solid rgb(92, 0, 0) !important;
+    border-top: 7px solid rgb(92, 0, 0) !important;
+}

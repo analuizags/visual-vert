@@ -9,7 +9,12 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 	feather.replace();
 
 	// tooltip
-	$('[data-toggle="tooltip"]').tooltip({ boundary: 'window' });
+	$('[data-toggle="tooltip"]').tooltip();
+
+	// multiple select
+	$('.mp-select').multipleSelect({
+		animate: 'slide'
+	});
 
 
 	$('#formulario-filtros').on('submit', function (e) {
@@ -21,14 +26,14 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 			area = $('#area').val();
 
         let dados = {
-            ano: ano,
+            anoLetConclusao: ano,
             sexo: sexo,
-            campus: campus,
-            area: area
+            codInstituicao: campus,
+            codAreaConhecimento: area
         };
 
 		dados.acao = "Visualizacoes/filtrar";
-		// console.log(baseUrl);
+		console.log(dados);
 
         $.ajax({
             url: baseUrl,
@@ -69,7 +74,7 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 	];
 
 	var coresArea = [cores[1], cores[3], cores[5],cores[7],cores[9],cores[11],cores[12],cores[13],cores[14]];
-	var coresSexo = ['rgb(255, 192, 203)', 'rgb(176, 224, 230)'];
+	var coresSexo = ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'];
 
 	// graphs
 	var lbs = ['2015', '2016', '2017', '2018', '2019', '2020'];            
@@ -77,67 +82,49 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 	var ctxBar = document.getElementById('myChart');
 	var chartBar = new Chart(ctxBar, {
 		type: 'bar',
-		chart: ' aaa',
 		data: {
 			labels: lbs,
 			datasets: [{
+				label: 'Concluida',
+				backgroundColor: 'transparent',
+				borderColor: cores[4],
+				data: [153, 218, 110, 254, 358, 100],
+				type: 'line'
+			},
+			{
+				label: 'Não Concluída',
+				backgroundColor: 'transparent',
+				borderColor: cores[13],
+				data: [131, 458, 354, 180, 288, 273],
+				type: 'line'
+			},
+			{
+				label: 'Em Fluxo',
+				backgroundColor: 'transparent',
+				borderColor: cores[11],
+				data: [100, 358, 254, 100, 218, 153],
+				type: 'line'
+			},
+			{
 				label: 'Masculino',
-				data: [129, 307, 239, 137, 210, 212],
-				backgroundColor: [
-					'rgba(255, 99, 132, .2)',
-					'rgba(255, 99, 132, .2)',
-					'rgba(255, 99, 132, .2)',
-					'rgba(255, 99, 132, .2)',
-					'rgba(255, 99, 132, .2)',
-					'rgba(255, 99, 132, .2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(255, 99, 132, 1)',
-					'rgba(255, 99, 132, 1)',
-					'rgba(255, 99, 132, 1)',
-					'rgba(255, 99, 132, 1)',
-					'rgba(255, 99, 132, 1)'
-				],
-				borderWidth: 1
+				data: [29, 307, 239, 137, 210, 212],
+				backgroundColor: coresSexo[0]
 			},
 			{
 				label: 'Feminio',
 				data: [102, 251, 215, 143, 178, 161],
-				backgroundColor: [
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(75, 192, 192, 0.2)'
-				],
-				borderColor: [
-					'rgba(75, 192, 192, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(75, 192, 192, 1)'
-				],
-				borderWidth: 1
-			},
-			{
-				label: 'Ceres',
-				backgroundColor: 'transparent',
-				borderColor: 'rgb(205, 99, 132)',
-				data: [30, 125, 106, 48, 62, 67],
-				type: 'line'
-			},
-			{
-				label: 'Geral',
-				backgroundColor: 'transparent',
-				borderColor: 'rgb(55, 99, 255)',
-				data: [231, 558, 454, 280, 388, 373],
-				type: 'line'
+				backgroundColor: coresSexo[1]
 			}]
 		},
 		options: {
+			layout: {
+				padding: {
+					left: 40,
+					right: 40,
+					top: 20,
+					bottom: 0
+				}
+			},
 			legend: {
 				position: 'top',
 				onClick: false,
@@ -156,6 +143,7 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 					}
 				}],
 				xAxes: [{
+					barPercentage: 0.8,
 					scaleLabel: {
 						display: true,
 						labelString: 'Anos',
