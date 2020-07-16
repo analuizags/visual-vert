@@ -75,7 +75,7 @@
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-muted">
                             <span>Dados</span>
                             
-                            <span class="d-flex align-items-center text-muted" data-toggle="tooltip" data-placement="right" 
+                            <span class="d-flex align-items-center text-muted" data-toggle="tooltip" data-placement="right"
                             title="Aqui você pode filtrar os dados que podem aparecer no gráfico. Não são necessariamente os mesmos da tabela.">
                                 <span data-feather="info"></span>
                             </span>
@@ -84,14 +84,8 @@
                         <ul class="nav flex-column mb-2">
                             <li class="nav-item">
                                 <span class="nav-link">
-                                    <!-- <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="switchAno" checked>
-                                        <label class="custom-control-label" for="switchAno">Períodos</label>
-                                    </div> -->
                                     <label class="ml-1">Períodos</label><br>
                                     <select data-placeholder="Escolha o período" class="mp-select" id="ano" multiple="multiple">
-                                        <!-- <option value="1">Nenhum</option>
-                                        <option value="0" selected>Todos</option> -->
                                         <?php 
                                             if (count((array)$opcoesFiltro["periodos"][0]) > 0) {
                                                 foreach ($opcoesFiltro["periodos"] as $key => $value) {
@@ -106,8 +100,6 @@
                                 <span class="nav-link">
                                     <label class="ml-1">Gênero</label><br>
                                     <select data-placeholder="Escolha o gênero" class="mp-select" id="sexo" multiple="multiple">
-                                        <!-- <option value="1">Nenhum</option>
-                                        <option value="0" selected>Todos</option> -->
                                         <option value="F">Feminino</option>
                                         <option value="M">Masculino</option>
                                     </select>
@@ -117,8 +109,6 @@
                                 <span class="nav-link">
                                     <label class="ml-1">Unidade de Ensino</label><br>
                                     <select data-placeholder="Escolha o campus" class="mp-select" id="campus" multiple="multiple">
-                                        <!-- <option value="1">Nenhum</option>
-                                        <option value="0" selected>Todos</option> -->
                                         <?php 
                                             if (count((array)$opcoesFiltro["instituicoes"][0]) > 0) {
                                                 foreach ($opcoesFiltro["instituicoes"] as $key => $value) {
@@ -133,8 +123,6 @@
                                 <span class="nav-link">
                                     <label class="ml-1">Área do Conhecimento</label><br>
                                     <select data-placeholder="Escolha a área" class="mp-select" id="area" multiple="multiple">
-                                        <!-- <option value="1" selected>Nenhum</option>
-                                        <option value="0">Todos</option> -->
                                         <?php 
                                             if (count((array)$opcoesFiltro["areas"][0]) > 0) {
                                                 foreach ($opcoesFiltro["areas"] as $key => $value) {
@@ -147,26 +135,6 @@
                             </li>
                         </ul>
 
-                        <!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Tabela</span>
-                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                                <span data-feather="info"></span>
-                            </a>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="file-text"></span>
-                                    Current month
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="file-text"></span>
-                                    Year-end sale
-                                </a>
-                            </li>
-                        </ul> -->
 
                         <div class="btn-sm clearfix mr-2">
                             <button type="submit" class="btn btn-secondary btn-sm float-right">

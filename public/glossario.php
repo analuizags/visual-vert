@@ -97,7 +97,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#conceito">
                                 <span data-feather="help-circle"></span>
-                                Conceito 
+                                Conceito
                             </a>
                         </li>
                         <li class="nav-item">
@@ -257,7 +257,7 @@
                         </p>
 
                         <div class="text-center">
-                            <img width="900" src="assets/imagens/diagrama.svg" class="img-fluid mt-2 mb-2" alt="Diagrama">
+                            <img width="800" src="assets/imagens/diagrama.svg" class="img-fluid mt-2 mb-2" alt="Diagrama">
                         </div>
                     </div>
                 </div>

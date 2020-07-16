@@ -8,15 +8,14 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 	// icons
 	feather.replace();
 
-	// tooltip
-	$('[data-toggle="tooltip"]').tooltip();
+	// $('[data-toggle="tooltip"]').tooltip();
 
 	// multiple select
 	$('.mp-select').multipleSelect({
 		animate: 'slide'
 	});
 
-
+	
 	$('#formulario-filtros').on('submit', function (e) {
 		e.preventDefault();
 
