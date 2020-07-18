@@ -32,7 +32,7 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
         };
 
 		dados.acao = "Visualizacoes/filtrar";
-		console.log(dados);
+		// console.log(dados);
 
         $.ajax({
             url: baseUrl,
@@ -41,17 +41,49 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
             dataType: "text",
             async: true,
             success: function (res) {
-                if (res && Number(res) > 0) {
-                    console.log("Deu Certo");
+				res = JSON.parse(res);
+
+                if (res && (Object.keys(res).length) > 0) {
+
+					let tipo = $('#tipoVerticalizacao').find(":selected").val();
+					
+					if (tipo == 0) { //independente de eixo
+						console.log('aaa');				
+
+					} else if (tipo == 1) { //mesmo eixo
+						gerarGrafico(res.eixo);
+
+					} else { //fora do eixo
+						gerarGrafico(res.foraEixo);
+					}
+
+                    // console.log(tipo);
                 } else {
                     console.log("Não Deu Certo :(");
-                }
+				}
+				
             },
             error: function (request, status, str_error) {
                 console.log(request, status, str_error)
             }
         });
 	});
+
+}());
+
+function resetCanvas(){
+	$('#chartBar').remove(); 
+	$('#chartVert').remove(); 
+	$('#chartReingresso').remove(); 
+
+	$('#gBar').append('<canvas class="" width="700" height="500" id="chartBar"></canvas>');
+	$('#gVert').append('<canvas class="" width="365" height="250" id="chartVert"></canvas>');
+	$('#gRein').append('<canvas class="" width="365" height="250" id="chartReingresso"></canvas>');
+	
+	// ctxBar = document.getElementById('myChart').getContext('2d');
+};
+
+function gerarGrafico(dados) {
 
 	// cores	
 	var cores = [
@@ -78,8 +110,11 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 	// graphs
 	var lbs = ['2015', '2016', '2017', '2018', '2019', '2020'];            
         
-	var ctxBar = document.getElementById('myChart');
-	var chartBar = new Chart(ctxBar, {
+	resetCanvas();
+
+	var ctxBar = document.getElementById('chartBar').getContext('2d');
+
+	var chart = new Chart(ctxBar, {		
 		type: 'bar',
 		data: {
 			labels: lbs,
@@ -87,51 +122,54 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 				label: 'Concluida',
 				backgroundColor: 'transparent',
 				borderColor: cores[4],
-				data: [153, 218, 110, 254, 358, 100],
+				data: Object.values(dados.linhas.Concluida),
 				type: 'line'
 			},
 			{
 				label: 'Não Concluída',
 				backgroundColor: 'transparent',
 				borderColor: cores[13],
-				data: [131, 458, 354, 180, 288, 273],
+				data: Object.values(dados.linhas.NConcluida),
 				type: 'line'
 			},
 			{
 				label: 'Em Fluxo',
 				backgroundColor: 'transparent',
 				borderColor: cores[11],
-				data: [100, 358, 254, 100, 218, 153],
+				data: Object.values(dados.linhas.Fluxo),
 				type: 'line'
 			},
 			{
-				label: 'Masculino',
-				data: [29, 307, 239, 137, 210, 212],
+				label: 'Verticalização',
+				data: Object.values(dados.barras.vert),
 				backgroundColor: coresSexo[0]
 			},
 			{
-				label: 'Feminio',
-				data: [102, 251, 215, 143, 178, 161],
+				label: 'Reingresso',
+				data: Object.values(dados.barras.reingresso),
 				backgroundColor: coresSexo[1]
 			}]
 		},
 		options: {
 			layout: {
 				padding: {
-					left: 40,
-					right: 40,
+					left: 0,
+					right: 0,
 					top: 20,
 					bottom: 0
 				}
 			},
 			legend: {
+				boxWidth: 20,
+				fontSize: 12,
 				position: 'top',
 				onClick: false,
 				labels: {
 					boxWidth: 30,
 					padding: 17,
 					fontColor: '#333'
-				}
+				},
+				padding: 30
 			},
 			scales: {
 				yAxes: [{
@@ -142,7 +180,8 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 					}
 				}],
 				xAxes: [{
-					barPercentage: 0.8,
+					barPercentage: 0.7,
+					categoryPercentage: 0.7,
 					scaleLabel: {
 						display: true,
 						labelString: 'Anos',
@@ -153,38 +192,42 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 		}
 	});
 	
-	/*
-	var ctxPizza = document.getElementById('myChart');
-	var chartPizza = new Chart(ctxPizza, {
-		type: 'pie',
+
+	var ctxPizza1 = document.getElementById('chartVert');
+	var chartPizza1 = new Chart(ctxPizza1, {
+		type: 'doughnut',
 		data: {
-			labels: [
-				'Red',
-				'Yellow',
-				'Blue'
-			],
+			labels: ['Concluída',	'Não Concluída', 'Em Fluxo'],
 			datasets: [{
 				backgroundColor: [
-					'rgba(255, 99, 132, .7)',
-					'rgba(75, 192, 192, 0.7)',
-					'rgba(75, 92, 92, 0.7)'
+					cores[4],
+					cores[13],
+					cores[11]
 				],
-				data: [10, 20, 30]
+				data: Object.values(dados.pizzas.vert)
 			}]
 		},
 		options: {
-			title: {
-				display: false,
-				fontSize: 20,
-				text: "Gráfico dos checkboxs",
-				// padding: 20,
-				lineHeight: 2
+			layout: {
+				padding: {
+					left: 10,
+					right: 10,
+					top: 10,
+					bottom: 15
+				}
 			},
+			title: {
+				display: true,
+				fontSize: 16,
+				text: "Verticalização",
+				// padding: 20,
+				// lineHeight: 2
+			}, 
 			legend: {
 				position: 'right',
 				onClick: false,
 				labels: {
-					boxWidth: 30,
+					boxWidth: 20,
 					padding: 17,
 					fontColor: '#666',
 					fontFamily: 'Arial'
@@ -193,37 +236,41 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 		}
 	});
 	
-	var ctxLines = document.getElementById('g-lines');
-	var chartLine = new Chart(ctxLines, {
-		type: 'line',
+	var ctxPizza2 = document.getElementById('chartReingresso');
+	var chartPizza2 = new Chart(ctxPizza2, {
+		type: 'doughnut',
 		data: {
-			labels: lbs,
+			labels: ['Concluída',	'Não Concluída', 'Em Fluxo'],
 			datasets: [{
-				label: 'Masculino',
-				backgroundColor: 'transparent',
-				borderColor: 'rgb(205, 99, 132)',
-				data: [0, 10, 5, 2, 20, 30]
-			},
-			{
-				label: 'Feminino',
-				backgroundColor: 'transparent',
-				borderColor: 'rgb(55, 99, 255)',
-				data: [10, 2, 10, 2, 30, 35]
+				backgroundColor: [
+					cores[4],
+					cores[13],
+					cores[11]
+				],
+				data: Object.values(dados.pizzas.reingresso)
 			}]
 		},
 		options: {
+			layout: {
+				padding: {
+					left: 10,
+					right: 10,
+					top: 15,
+					bottom: 10
+				}
+			},
 			title: {
 				display: true,
-				fontSize: 20,
-				text: "Gráfico dos checkboxs",
+				fontSize: 16,
+				text: "Verticalização de Reingressos",
 				// padding: 20,
-				lineHeight: 2
+				// lineHeight: 2
 			},
 			legend: {
 				position: 'right',
 				onClick: false,
 				labels: {
-					boxWidth: 30,
+					boxWidth: 20,
 					padding: 17,
 					fontColor: '#666',
 					fontFamily: 'Arial'
@@ -231,5 +278,5 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 			}
 		}
 	});
-	*/
-}())
+	
+}

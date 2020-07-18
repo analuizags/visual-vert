@@ -151,18 +151,30 @@
                     <h1 class="h2 titulo">Visualização</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
 
-                        <select class="custom-select custom-select-sm">
-                            <option selected value="1">Independente de Eixo</option>
-                            <option value="2">Mesmo Eixo</option>
-                            <option value="3">Fora do Eixo</option>
+                        <select class="custom-select custom-select-sm" id="tipoVerticalizacao">
+                            <option selected value="0">Independente de Eixo</option>
+                            <option value="1">Mesmo Eixo</option>
+                            <option value="2">Fora do Eixo</option>
                         </select>
 
                     </div>
                 </div>
 
                 <!-- <div id="aqui" style="border-stye:solid; width:100%; height:500px; display:flex"></div> -->
-                <canvas class="my-4 w-85" id="myChart" width="850" height="400"></canvas>
-                
+                <div class="row mb-5">
+                    <div class="col-md-8" id="gBar">
+                        <canvas class="" width="700" height="500" id="chartBar"></canvas>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row" id="gVert">
+                            <canvas class="" width="365" height="250" id="chartVert"></canvas>
+                        </div>
+                        <div class="row" id="gRein">
+                            <canvas class="" width="365" height="250" id="chartReingresso"></canvas>
+                        </div>
+                    </div>                    
+                </div>
+
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-2 mt-4">
                     <h2 class="titulo">Detalhamento</h2>
                     <div class="btn-toolbar mb-2 mb-md-0">
