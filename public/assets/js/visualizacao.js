@@ -1,6 +1,8 @@
 const base = window.location.origin;
 const url = window.location.pathname.split('/');
 const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
+const cores = [ 'rgb(0, 0, 0)', 'rgb(220, 20, 60)', 'rgb(255, 20, 147)', 'rgb(139, 0, 139)', 'rgb(75, 0, 130)', 'rgb(0, 0, 128)', 'rgb(0, 128, 128)', 'rgb(0, 191, 255)', 'rgb(0, 255, 255)', 'rgb(0, 250, 154)', 'rgb(173, 255, 47)', 'rgb(0, 128, 0)', 'rgb(255, 215, 0)', 'rgb(255, 69, 0)', 'rgb(139, 69, 19)', ];
+var res = 0;
 
 (function () {
 	'use strict'
@@ -15,61 +17,112 @@ const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
 		animate: 'slide'
 	});
 
+	$(document).ready(enviarFormulario());
 	
 	$('#formulario-filtros').on('submit', function (e) {
 		e.preventDefault();
-
-		let ano = $('#ano').val(),
-			sexo = $('#sexo').val(),
-			campus = $('#campus').val(),
-			area = $('#area').val();
-
-        let dados = {
-            anoLetConclusao: ano,
-            sexo: sexo,
-            codInstituicao: campus,
-            codAreaConhecimento: area
-        };
-
-		dados.acao = "Visualizacoes/filtrar";
-		// console.log(dados);
-
-        $.ajax({
-            url: baseUrl,
-            type: "POST",
-            data: dados,
-            dataType: "text",
-            async: true,
-            success: function (res) {
-				res = JSON.parse(res);
-
-                if (res && (Object.keys(res).length) > 0) {
-
-					let tipo = $('#tipoVerticalizacao').find(":selected").val();
-					
-					if (tipo == 0) { //independente de eixo
-						console.log('aaa');				
-
-					} else if (tipo == 1) { //mesmo eixo
-						gerarGrafico(res.eixo);
-
-					} else { //fora do eixo
-						gerarGrafico(res.foraEixo);
-					}
-
-                    // console.log(tipo);
-                } else {
-                    console.log("Não Deu Certo :(");
-				}
-				
-            },
-            error: function (request, status, str_error) {
-                console.log(request, status, str_error)
-            }
-        });
+		enviarFormulario();
 	});
 
+	$('#tipoVerticalizacao').change(function () {
+		setTimeout(() => {
+			let retorno = verificarTipo(res);
+			gerarGrafico(retorno);
+		}, 1500)	
+	});
+
+	$('#faseVerticalizacao').change(function () {
+		setTimeout(() => {
+			let retorno = verificarTipo(res);
+			verificarFase(retorno.tabela);
+		}, 1500)	
+	});
+
+	// $('#tipoVerticalizacao').change().setTimeout(verificarTipo(), 3000);
+	// $('#faseVerticalizacao').change().setTimeout(verificarFase(), 3000);
+
 }());
+
+function enviarFormulario() {
+	let ano = $('#ano').val(),
+		sexo = $('#sexo').val(),
+		campus = $('#campus').val(),
+		area = $('#area').val();
+
+	let dados = {
+		anoLetConclusao: ano,
+		sexo: sexo,
+		codInstituicao: campus,
+		codAreaConhecimento: area
+	};
+
+	dados.acao = "Visualizacoes/filtrar";
+	// console.log(dados);
+
+	$.ajax({
+		url: baseUrl,
+		type: "POST",
+		data: dados,
+		dataType: "text",
+		async: true,
+		success: function (result) {
+			res = JSON.parse(result);
+
+			if (res && (Object.keys(res).length) > 0) {
+				let retorno = verificarTipo();
+				gerarGrafico(retorno);
+				// verificarFase(retorno.tabela);
+				// console.log(retorno);
+			} else {
+				console.log("Não Deu Certo :(");
+			}
+			
+		},
+		error: function (request, status, str_error) {
+			console.log(request, status, str_error)
+		}
+	});
+}
+
+function verificarTipo() {
+	
+	let tipo = $('#tipoVerticalizacao').find(":selected").val();
+				
+	if (tipo == 1) { // mesmo eixo
+		return res.eixo;
+	} else if (tipo == 2) { // fora do eixo
+		return res.foraEixo;
+	} else {
+		return res.independente;
+	}
+
+}
+
+function verificarFase(dados) {
+	
+	let tipo = $('#faseVerticalizacao').find(":selected").val();
+				
+	if (tipo == 0) { // vert concluida
+		gerarTabela(dados.vertConcluida);
+		// console.log(dados);
+
+	} else if (tipo == 1) { // vert nao concluida
+		gerarTabela(dados.vertNConcluida);
+
+	} else if (tipo == 2) { // vert em fluxo
+		gerarTabela(dados.vertFluxo);
+
+	} else if (tipo == 3) { // vert reingresso concluida
+		gerarTabela(dados.reingressoConcluida);
+
+	} else if (tipo == 4) { // vert reingresso nao concluida
+		gerarTabela(dados.reingressoNConcluida);
+
+	} else if (tipo == 5){ // vert reingresso em fluxo
+		gerarTabela(dados.reingressoFluxo);
+	}
+
+}
 
 function resetCanvas(){
 	$('#chartBar').remove(); 
@@ -85,29 +138,8 @@ function resetCanvas(){
 
 function gerarGrafico(dados) {
 
-	// cores	
-	var cores = [
-		'rgb(0, 0, 0)',
-		'rgb(220, 20, 60)',
-		'rgb(255, 20, 147)',
-		'rgb(139, 0, 139)',
-		'rgb(75, 0, 130)',
-		'rgb(0, 0, 128)',
-		'rgb(0, 128, 128)',
-		'rgb(0, 191, 255)',
-		'rgb(0, 255, 255)',
-		'rgb(0, 250, 154)',
-		'rgb(173, 255, 47)',
-		'rgb(0, 128, 0)',
-		'rgb(255, 215, 0)',
-		'rgb(255, 69, 0)',
-		'rgb(139, 69, 19)',
-	];
-
-	var coresArea = [cores[1], cores[3], cores[5],cores[7],cores[9],cores[11],cores[12],cores[13],cores[14]];
-	var coresSexo = ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'];
-
-	// graphs
+	// var coresArea = [cores[1], cores[3], cores[5],cores[7],cores[9],cores[11],cores[12],cores[13],cores[14]];
+	var coresBarras = ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'];
 	var lbs = ['2015', '2016', '2017', '2018', '2019', '2020'];            
         
 	resetCanvas();
@@ -142,12 +174,12 @@ function gerarGrafico(dados) {
 			{
 				label: 'Verticalização',
 				data: Object.values(dados.barras.vert),
-				backgroundColor: coresSexo[0]
+				backgroundColor: coresBarras[0]
 			},
 			{
 				label: 'Reingresso',
 				data: Object.values(dados.barras.reingresso),
-				backgroundColor: coresSexo[1]
+				backgroundColor: coresBarras[1]
 			}]
 		},
 		options: {

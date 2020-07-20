@@ -89,7 +89,7 @@
                                         <?php 
                                             if (count((array)$opcoesFiltro["periodos"][0]) > 0) {
                                                 foreach ($opcoesFiltro["periodos"] as $key => $value) {
-                                                    echo "<option value='$value->anoLetInicio'>$value->anoLetInicio</option>";
+                                                    echo "<option value='$value->anoLetInicio' selected>$value->anoLetInicio</option>";
                                                 }
                                             }
                                         ?>
@@ -100,8 +100,8 @@
                                 <span class="nav-link">
                                     <label class="ml-1">Gênero</label><br>
                                     <select data-placeholder="Escolha o gênero" class="mp-select" id="sexo" multiple="multiple">
-                                        <option value="F">Feminino</option>
-                                        <option value="M">Masculino</option>
+                                        <option value="F" selected>Feminino</option>
+                                        <option value="M" selected>Masculino</option>
                                     </select>
                                 </span>
                             </li>
@@ -112,7 +112,7 @@
                                         <?php 
                                             if (count((array)$opcoesFiltro["instituicoes"][0]) > 0) {
                                                 foreach ($opcoesFiltro["instituicoes"] as $key => $value) {
-                                                    echo "<option value='$value->codInstituicao'>$value->descInstituicao</option>";
+                                                    echo "<option value='$value->codInstituicao' selected>$value->descInstituicao</option>";
                                                 }
                                             }
                                         ?>
@@ -126,7 +126,7 @@
                                         <?php 
                                             if (count((array)$opcoesFiltro["areas"][0]) > 0) {
                                                 foreach ($opcoesFiltro["areas"] as $key => $value) {
-                                                    echo "<option value='$value->codAreaConhecimento'>$value->descAreaConhecimento</option>";
+                                                    echo "<option value='$value->codAreaConhecimento' selected>$value->descAreaConhecimento</option>";
                                                 }
                                             }
                                         ?>
@@ -178,10 +178,13 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-2 mt-4">
                     <h2 class="titulo">Detalhamento</h2>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <select class="custom-select custom-select-sm">
-                            <option selected value="1">Em Fluxo</option>
-                            <option value="2">Não Concluída</option>
-                            <option value="3">Concluída</option>
+                        <select class="custom-select custom-select-sm" id="faseVerticalizacao">
+                            <option value="0" selected>Verticalização Concluída</option>
+                            <option value="1">Verticalização Não Concluída</option>
+                            <option value="2">Verticalização em Fluxo</option>
+                            <option value="3">Verticalização Reingresso Concluída</option>
+                            <option value="4">Verticalização Reingresso Não Concluída</option>
+                            <option value="5">Verticalização Reingresso em Fluxo</option>
                         </select>
                     </div>
                 </div>

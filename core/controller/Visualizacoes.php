@@ -113,38 +113,26 @@ class Visualizacoes {
         $evadido = [2, 3, 4, 7, 8, 9, 10, 11, 20, 22];
 
         // resposta padrão
+        $linhas = array(
+            'Concluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
+            'NConcluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
+            'Fluxo' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0)
+        );
+
+        $barras = array(
+            'vert' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
+            'reingresso' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 )
+        );
+
+        $pizzas = array(
+            'vert' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 ),
+            'reingresso' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 )
+        );
 
         $resultado = array(
-            'eixo' => array(
-                'linhas' => array(
-                        'Concluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-                        'NConcluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-                        'Fluxo' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0)
-                ),
-                'barras' => array(
-                    'vert' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-                    'reingresso' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 )
-                ),
-                'pizzas' => array(
-                    'vert' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 ),
-                    'reingresso' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 )
-                )
-            ),
-            'foraEixo' => array(
-                'linhas' => array(
-                    'Concluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-                    'NConcluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-                    'Fluxo' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 )
-                ),
-                'barras' => array(
-                    'vert' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-                    'reingresso' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 )
-                ),
-                'pizzas' => array(
-                    'vert' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 ),
-                    'reingresso' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 )
-                )
-            )
+            'eixo' => array( 'linhas' => $linhas, 'barras' => $barras, 'pizzas' => $pizzas ),
+            'foraEixo' => array( 'linhas' => $linhas, 'barras' => $barras, 'pizzas' => $pizzas ),
+            'independente' => array( 'linhas' => $linhas, 'barras' => $barras, 'pizzas' => $pizzas )
         );
 
         $alunos = array_column($dados, 'aluno'); // pega a key especifica em cada objeto dentro do array
@@ -197,6 +185,8 @@ class Visualizacoes {
                         } else {
                             $eixo = "foraEixo";
                         }
+
+                        // dados da tabela devem possuir cursos apenas do mesmo campus ou area
                         
                         $ano = $dadosAluno[$j]->anoLetInicio;
                         $campus = $dadosAluno[$j]->descInstituicao;
@@ -204,11 +194,16 @@ class Visualizacoes {
                         $sexo = $dadosAluno[$j]->sexo;
 
                         if (!isset($resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano])) $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano] = 0;
-
                         $resultado[$eixo]['linhas'][$fase][$ano]++;
                         $resultado[$eixo]['barras'][$tipo][$ano]++;
                         $resultado[$eixo]['pizzas'][$tipo][$fase]++;
                         $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano]++;
+                        
+                        if (!isset($resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano])) $resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano] = 0;
+                        $resultado['independente']['linhas'][$fase][$ano]++;
+                        $resultado['independente']['barras'][$tipo][$ano]++;
+                        $resultado['independente']['pizzas'][$tipo][$fase]++;
+                        $resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano]++;
                     }
                 }
             }
