@@ -113,27 +113,16 @@ class Visualizacoes {
         $evadido = [2, 3, 4, 7, 8, 9, 10, 11, 20, 22];
 
         // resposta padrão
-        $linhas = array(
-            'Concluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-            'NConcluida' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-            'Fluxo' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0)
-        );
+        $arrayAnos = array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 );
+        $arrayFase = array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 );
+        
+        $arrayLinhas = array( 'Concluida' => $arrayAnos, 'NConcluida' => $arrayAnos, 'Fluxo' => $arrayAnos );
+        $arrayBarras = array( 'vert' => $arrayAnos, 'reingresso' => $arrayAnos );
+        $arrayPizzas = array( 'vert' => $arrayFase, 'reingresso' => $arrayFase );
 
-        $barras = array(
-            'vert' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 ),
-            'reingresso' => array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 )
-        );
+        $arrayGraficos = array( 'linhas' => $arrayLinhas, 'barras' => $arrayBarras, 'pizzas' => $arrayPizzas );
 
-        $pizzas = array(
-            'vert' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 ),
-            'reingresso' => array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 )
-        );
-
-        $resultado = array(
-            'eixo' => array( 'linhas' => $linhas, 'barras' => $barras, 'pizzas' => $pizzas ),
-            'foraEixo' => array( 'linhas' => $linhas, 'barras' => $barras, 'pizzas' => $pizzas ),
-            'independente' => array( 'linhas' => $linhas, 'barras' => $barras, 'pizzas' => $pizzas )
-        );
+        $resultado = array( 'eixo' => $arrayGraficos, 'foraEixo' => $arrayGraficos, 'independente' => $arrayGraficos );
 
         $alunos = array_column($dados, 'aluno'); // pega a key especifica em cada objeto dentro do array
         
@@ -193,13 +182,13 @@ class Visualizacoes {
                         $area = $dadosAluno[$j]->descAreaConhecimento;
                         $sexo = $dadosAluno[$j]->sexo;
 
-                        if (!isset($resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano])) $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano] = 0;
+                        if (!isset($resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area])) $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
                         $resultado[$eixo]['linhas'][$fase][$ano]++;
                         $resultado[$eixo]['barras'][$tipo][$ano]++;
                         $resultado[$eixo]['pizzas'][$tipo][$fase]++;
                         $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano]++;
                         
-                        if (!isset($resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano])) $resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano] = 0;
+                        if (!isset($resultado['independente']['tabela'][$tipo.$fase][$campus][$area])) $resultado['independente']['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
                         $resultado['independente']['linhas'][$fase][$ano]++;
                         $resultado['independente']['barras'][$tipo][$ano]++;
                         $resultado['independente']['pizzas'][$tipo][$fase]++;
