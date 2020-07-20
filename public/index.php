@@ -163,6 +163,7 @@
                 <!-- <div id="aqui" style="border-stye:solid; width:100%; height:500px; display:flex"></div> -->
                 <div class="row mb-5">
                     <div class="col-md-8" id="gBar">
+                        <div class="spinner-grow loader-graficos" role="status" hidden></div>
                         <canvas class="" width="700" height="500" id="chartBar"></canvas>
                     </div>
                     <div class="col-md-4">
@@ -189,7 +190,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped table-md">
+                    <table class="table table-striped table-sm">
                         <thead>
                             <tr>
                                 <th scope="col">Unidade de Ensino</th>
@@ -204,60 +205,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td scope="row" rowspan="2" class="align-middle">Ceres</td>
-                                <td>Exatas</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td>Biológicas</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" rowspan="4" class="align-middle">Rio Verde</td>
-                                <td>Exatas</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td>Biológicas</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td>Engenharias</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td>Sociais e Aplicadas</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
-                                <td>12%</td>
+                                <td scope="row" colspan="8" class="align-middle text-center">Esperando resultados!</td>
                             </tr>
                         </tbody>
                     </table>

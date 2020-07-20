@@ -28,6 +28,7 @@ var res = 0;
 		setTimeout(() => {
 			let retorno = verificarTipo(res);
 			gerarGrafico(retorno);
+			verificarFase(retorno.tabela);
 		}, 1500)	
 	});
 
@@ -59,6 +60,8 @@ function enviarFormulario() {
 	dados.acao = "Visualizacoes/filtrar";
 	// console.log(dados);
 
+	$('.loader-graficos').removeAttr('hidden');
+
 	$.ajax({
 		url: baseUrl,
 		type: "POST",
@@ -71,7 +74,7 @@ function enviarFormulario() {
 			if (res && (Object.keys(res).length) > 0) {
 				let retorno = verificarTipo();
 				gerarGrafico(retorno);
-				// verificarFase(retorno.tabela);
+				verificarFase(retorno.tabela);
 				// console.log(retorno);
 			} else {
 				console.log("Não Deu Certo :(");
@@ -125,6 +128,7 @@ function verificarFase(dados) {
 }
 
 function resetCanvas(){
+	$('.loader-graficos').attr('hidden', '');
 	$('#chartBar').remove(); 
 	$('#chartVert').remove(); 
 	$('#chartReingresso').remove(); 
@@ -145,7 +149,6 @@ function gerarGrafico(dados) {
 	resetCanvas();
 
 	var ctxBar = document.getElementById('chartBar').getContext('2d');
-
 	var chart = new Chart(ctxBar, {		
 		type: 'bar',
 		data: {
@@ -311,4 +314,44 @@ function gerarGrafico(dados) {
 		}
 	});
 	
+}
+
+function gerarTabela(dados) {
+	
+	let corpoTabela = "";
+
+	$('table > thead').empty();
+	$('table > thead').append('<tr><th scope="col">Unidade de Ensino</th><th scope="col">Área de Conhecimento</th><th scope="col">2015</th><th scope="col">2016</th><th scope="col">2017</th><th scope="col">2018</th><th scope="col">2019</th><th scope="col">2020</th></tr>');
+	for (let campus in dados) {
+		if (dados.hasOwnProperty(campus)) {
+			// console.log(campus + ' - ' + Object.keys(dados[campus]).length + '\n');
+			// console.log(dados[campus]);
+
+			corpoTabela += '<tr><td scope="row" rowspan="' + Object.keys(dados[campus]).length + '" class="align-middle">' + campus + '</td>';
+			let flag = false;
+
+			for (let area in dados[campus]) {
+				if (dados[campus].hasOwnProperty(area)) {
+					if (flag) {
+						corpoTabela += '<tr>';
+					}
+					corpoTabela += '<td class="align-middle">' + area + '</td>';
+					
+					for (let ano in dados[campus][area]) {
+						if (dados[campus][area].hasOwnProperty(ano)) {
+							corpoTabela += '<td>' + dados[campus][area][ano] + '</td>';
+							
+						}
+					}
+
+				}
+
+				corpoTabela += '</tr>';	
+				flag = false;
+			}
+		}
+	}
+
+	$('table > tbody').empty();
+	$('table > tbody').append(corpoTabela);
 }
