@@ -14,3 +14,9 @@ Para configurar a conexão com o banco de dados, é necessário criar o arquivo 
   }
 }
 ```
+
+## Tecnologia utilizadas
+* Bootstrap 4.5
+* jQuery 3.4
+* PHP 7.2 
+* MySQL 5.7 
