@@ -190,7 +190,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped table-sm">
+                    <table class="table table-hover table-sm">
                         <thead>
                             <tr>
                                 <th scope="col">Unidade de Ensino</th>
@@ -204,8 +204,94 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td scope="row" colspan="8" class="align-middle text-center">Esperando resultados!</td>
+                            </tr> -->
+                            <tr>
+                                <td scope="row" rowspan="2" class="align-middle">Campus Ceres</td>
+                                <td class="align-middle">Ciências Exatas e da Terra</td>
+                                <td>0</td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Multidisciplinar</td>
+                                <td>0</td>
+                                <td>3</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" rowspan="2" class="align-middle">Campus Rio Verde</td>
+                                <td class="align-middle">Multidisciplinar</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Ciências Agrárias</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" rowspan="1" class="align-middle">Campus Avançado Ipameri</td>
+                                <td class="align-middle">Ciências Sociais Aplicadas</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>5</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" rowspan="3" class="align-middle">Campus Urutaí</td>
+                                <td class="align-middle">Ciências Exatas e da Terra</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Multidisciplinar</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Ciências Agrárias</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" rowspan="1" class="align-middle">Campus Iporá</td>
+                                <td class="align-middle">Ciências Agrárias</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                         </tbody>
                     </table>

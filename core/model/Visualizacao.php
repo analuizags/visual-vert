@@ -3,7 +3,6 @@
 namespace core\model;
 
 use core\crud\CRUD;
-
 use Exception;
 
 class Visualizacao extends CRUD {

@@ -124,6 +124,7 @@ class Visualizacoes {
 
         $resultado = array( 'eixo' => $arrayGraficos, 'foraEixo' => $arrayGraficos, 'independente' => $arrayGraficos );
 
+
         $alunos = array_column($dados, 'aluno'); // pega a key especifica em cada objeto dentro do array
         
         foreach ($codigos as $key => $value) {
@@ -141,7 +142,6 @@ class Visualizacoes {
                 for ($j=$i+1; $j < count($dadosAluno); $j++) { 
                     
                     if ($dadosAluno[$i]->nivelCurso < $dadosAluno[$j]->nivelCurso) { // se subir de nível
-                        // echo "<br>" . $dadosAluno[$i]->descCurso . $dadosAluno[$i]->situacao . " -> " . $dadosAluno[$j]->descCurso . $dadosAluno[$j]->situacao;
                         
                         if (in_array($dadosAluno[$i]->situacao, $concluido)) {
 
@@ -175,24 +175,28 @@ class Visualizacoes {
                             $eixo = "foraEixo";
                         }
 
-                        // dados da tabela devem possuir cursos apenas do mesmo campus ou area
-                        
                         $ano = $dadosAluno[$j]->anoLetInicio;
                         $campus = $dadosAluno[$j]->descInstituicao;
                         $area = $dadosAluno[$j]->descAreaConhecimento;
                         $sexo = $dadosAluno[$j]->sexo;
 
-                        if (!isset($resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area])) $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
+                        if ($dadosAluno[$i]->codInstituicao == $dadosAluno[$j]->codInstituicao) {
+                            if (!isset($resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area])) $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
+                            if (!isset($resultado['independente']['tabela'][$tipo.$fase][$campus][$area])) $resultado['independente']['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
+                            
+                            $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano]++;
+                            $resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano]++;
+                        }
+
+                        // buscar quais dos alunos que começaram em 2015 que tem matriculas em anos anteriores
+
                         $resultado[$eixo]['linhas'][$fase][$ano]++;
                         $resultado[$eixo]['barras'][$tipo][$ano]++;
                         $resultado[$eixo]['pizzas'][$tipo][$fase]++;
-                        $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano]++;
                         
-                        if (!isset($resultado['independente']['tabela'][$tipo.$fase][$campus][$area])) $resultado['independente']['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
                         $resultado['independente']['linhas'][$fase][$ano]++;
                         $resultado['independente']['barras'][$tipo][$ano]++;
                         $resultado['independente']['pizzas'][$tipo][$fase]++;
-                        $resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano]++;
                     }
                 }
             }
