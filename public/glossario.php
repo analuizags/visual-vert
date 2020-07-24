@@ -144,39 +144,50 @@
                 </div>
                 
                 <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="coisa">
-                    <div class="card-body">
-                        <h1 class="h2 mb-4">Alguma coisa</h1>
+                    <div class="card-body text-justify">
+                        <h1 class="h2 mb-4">Breve resumo</h1>
                         <a class="green ribbon">IF Goiano</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                        sed do eiusmod tempor incididunt ut labore et dolore magna 
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit 
-                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-                        occaecat cupidatat non proident, sunt in culpa qui officia 
-                        deserunt mollit anim id est laborum.
+                        <p>O IF Goiano é uma autarquia federal detentora de autonomia 
+                        administrativa, patrimonial, financeira, didático-pedagógica e disciplinar, equiparado às 
+                        universidades federais. Oferece educação superior, básica e profissional, 
+                        pluricurricular e multicampi, especializada em educação profissional e tecnológica 
+                        nas diferentes modalidades de ensino. Atende atualmente mais de seis mil alunos 
+                        de diversas localidades.</p>
+                        <p>Na educação superior prevalecem os cursos de Tecnologia, especialmente na área de 
+                        Agropecuária, e os de bacharelado e licenciatura. Na educação profissional técnica 
+                        de nível médio, O IF Goiano atua preferencialmente na forma integrada, atendendo 
+                        também ao público de jovens e adultos, por meio do Programa Nacional de Integração 
+                        da Educação Profissional com a Educação Básica na Modalidade de Educação Jovens e 
+                        Adultos (Proeja). A Instituição também atua na pós-graduação, com a oferta de três 
+                        cursos de mestrado e, atualmente, é o único Instituto Federal do país a ofertar 
+                        curso de doutorado.
                         </p>
                     </div>
                 </div>
 
                 <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="lei">
-                    <div class="card-body">
+                    <div class="card-body text-justify">
                         <h1 class="h2 mb-4">Lei de criação</h1>
                         <a class="green ribbon">IF Goiano</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                        sed do eiusmod tempor incididunt ut labore et dolore magna 
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                        Duis aute irure dolor in reprehenderit in voluptate velit 
-                        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-                        occaecat cupidatat non proident, sunt in culpa qui officia 
-                        deserunt mollit anim id est laborum.
+                        <p>Na mais recente dessas transformações nasce o Instituto Federal Goiano (IF Goiano), 
+                        criado por meio da Lei 11.892, de 29 de dezembro de 2008, juntamente com outros 37 Institutos 
+                        Federais de Educação, Ciência e Tecnologia. As novas instituições são fruto do reordenamento e 
+                        da expansão da Rede Federal de Educação Profissional e Tecnológica, iniciados em abril de 2005.
+                        De acordo com o disposto na Lei, o Estado de Goiás ficou com dois Institutos: o Instituto Federal 
+                        Goiano (IF Goiano) e o Instituto Federal de Goiás (IFG). O IF Goiano integrou os antigos Centros 
+                        Federais de Educação Tecnológica (Cefets) de Rio Verde, de Urutaí e sua respectiva Unidade de Ensino 
+                        Descentralizada de Morrinhos, mais a Escola Agrotécnica Federal de Ceres (EAFCE) – todos provenientes 
+                        de antigas escolas agrícolas. Como órgão de administração central, o IF Goiano tem uma Reitoria 
+                        instalada em Goiânia, Capital do Estado. Em 2010, a Instituição inaugurou mais um campus em Iporá e 
+                        em 2014 iniciou atividades em três novos campi, em Campos Belos, Posse e Trindade. Além destes, a 
+                        Instituição também possui quatro campi avançados, nas cidades de Catalão, Cristalina, Ipameri e 
+                        Hidrolândia, totalizando doze unidades em Goiás.
                         </p>
                     </div>
                 </div>
 
                 <div class="card shadow-sm ml-3 mr-3 mb-4 glossario" id="conceito">
-                    <div class="card-body">
+                    <div class="card-body text-justify">
                         <h1 class="h2 mb-4">Conceito</h1>
                         <a class="red ribbon">Verticalização</a>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 

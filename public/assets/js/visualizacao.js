@@ -17,25 +17,16 @@ var res = 0;
 		animate: 'slide'
 	});
 
-	$(document).ready(enviarFormulario());
+	// $(document).ready(enviarFormulario());
 	
 	$('#formulario-filtros').on('submit', function (e) {
 		e.preventDefault();
 		enviarFormulario();
 	});
 
-	$('#tipoVerticalizacao').change(function () {
-		setTimeout(() => {
-			let retorno = verificarTipo(res);
-			gerarGrafico(retorno);
-			verificarFase(retorno.tabela);
-		}, 1500)	
-	});
-
 	$('#faseVerticalizacao').change(function () {
 		setTimeout(() => {
-			let retorno = verificarTipo(res);
-			verificarFase(retorno.tabela);
+			verificarFase(res.tabela);
 		}, 1500)	
 	});
 
@@ -45,20 +36,43 @@ var res = 0;
 }());
 
 function enviarFormulario() {
-	let ano = $('#ano').val(),
-		sexo = $('#sexo').val(),
-		campus = $('#campus').val(),
-		area = $('#area').val();
+	let ano = $('#ano'),
+		sexo = $('#sexo'),
+		campus = $('#campus'),
+		area = $('#area'),
+		anos = [], 
+		unidades = [], 
+		areas = [];
+	
+
+	ano.find(":selected").each(function() {
+		anos.push($(this).text());
+	});
+	
+	campus.find(":selected").each(function() {
+		unidades.push($(this).text());
+	});
+
+	area.find(":selected").each(function() {
+		areas.push($(this).text());
+	});
+
+	let tb = {
+		anos: anos,
+		unidades: unidades,
+		areas: areas
+	};
 
 	let dados = {
-		anoLetConclusao: ano,
-		sexo: sexo,
-		codInstituicao: campus,
-		codAreaConhecimento: area
+		anoLetInicio: ano.val(),
+		sexo: sexo.val(),
+		codInstituicao: campus.val(),
+		codAreaConhecimento: area.val()
+		// tabela: tb
 	};
 
 	dados.acao = "Visualizacoes/filtrar";
-	// console.log(dados);
+	// console.log(tb);
 
 	$('.loader-graficos').removeAttr('hidden');
 
@@ -70,11 +84,12 @@ function enviarFormulario() {
 		async: true,
 		success: function (result) {
 			res = JSON.parse(result);
+			// console.log(res)
 
 			if (res && (Object.keys(res).length) > 0) {
-				let retorno = verificarTipo();
-				gerarGrafico(retorno);
-				verificarFase(retorno.tabela);
+				// let retorno = verificarTipo();
+				gerarGrafico(res);
+				verificarFase(res.tabela);
 				// console.log(retorno);
 			} else {
 				console.log("Não Deu Certo :(");
@@ -144,7 +159,7 @@ function gerarGrafico(dados) {
 
 	// var coresArea = [cores[1], cores[3], cores[5],cores[7],cores[9],cores[11],cores[12],cores[13],cores[14]];
 	var coresBarras = ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'];
-	var lbs = ['2015', '2016', '2017', '2018', '2019', '2020'];            
+	var lbs = ['2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];            
         
 	resetCanvas();
 
@@ -321,7 +336,7 @@ function gerarTabela(dados) {
 	let corpoTabela = "";
 
 	$('table > thead').empty();
-	$('table > thead').append('<tr><th scope="col">Unidade de Ensino</th><th scope="col">Área de Conhecimento</th><th scope="col">2015</th><th scope="col">2016</th><th scope="col">2017</th><th scope="col">2018</th><th scope="col">2019</th><th scope="col">2020</th></tr>');
+	$('table > thead').append('<tr> <th scope="col">Unidade de Ensino</th> <th scope="col">Área de Conhecimento</th> <th scope="col">2009</th> <th scope="col">2010</th> <th scope="col">2011</th> <th scope="col">2012</th> <th scope="col">2013</th> <th scope="col">2014</th> <th scope="col">2015</th> <th scope="col">2016</th> <th scope="col">2017</th> <th scope="col">2018</th> <th scope="col">2019</th> <th scope="col">2020</th> </tr>');
 	for (let campus in dados) {
 		if (dados.hasOwnProperty(campus)) {
 			// console.log(campus + ' - ' + Object.keys(dados[campus]).length + '\n');

@@ -62,6 +62,9 @@ class Visualizacoes {
 
     public function filtrar($dados) {
         $visualizacao = new Visualizacao();
+
+        // $linhasColunas = $dados['tabela'];
+        // unset($dados['tabela']);
         
         $campos = " a.codigo AS aluno";
         
@@ -71,6 +74,7 @@ class Visualizacoes {
         $campos = "
                     a.codigo AS aluno,
                     a.sexo AS sexo,
+                    m.anoLetAtual AS anoLetAtual,
                     m.anoLetInicio AS anoLetInicio,
                     m.anoLetConclusao AS anoLetConclusao,
                     m.situacao,
@@ -86,8 +90,8 @@ class Visualizacoes {
 
         $lista = $visualizacao->listar(null, $campos, $dados, $ordem);
 
-        // echo "<pre>";            
-        // print_r($dados['aluno']);
+        // echo "<pre>";
+        // print_r($linhasColunas);
         // print_r($lista);
 
         try {
@@ -104,26 +108,24 @@ class Visualizacoes {
 
     public function calcularVert($dados, $codigos) {
 
-        // echo "<pre>";
-        // print_r($codigos);
-        // print_r($dados);
-
         $concluido = [5, 6, 12, 13, 15, 18, 19, 23, 24];
         $matriculado = [0, 14, 16, 21];
         $evadido = [2, 3, 4, 7, 8, 9, 10, 11, 20, 22];
 
         // resposta padrão
-        $arrayAnos = array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 );
+        $arrayAnos = array( '2009' => 0, '2010' => 0, '2011' => 0, '2012' => 0, '2013' => 0, '2014' => 0, '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 );
+        // $arrayAnos = array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 );
         $arrayFase = array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 );
+        $arrayArea = array( 'Ciências Sociais Aplicadas' => $arrayAnos, 'Ciências Agrárias' => $arrayAnos, 'Ciências Exatas e da Terra' => $arrayAnos, 'Multidisciplinar' => $arrayAnos, 'Ciências Biológicas' => $arrayAnos, 'Engenharias' => $arrayAnos, 'Ciências da Saúde' => $arrayAnos, 'foraArea' => $arrayAnos ) ;
+        $arrayCampus = array( 'Campus Rio Verde' => $arrayArea, 'Campus Iporá' => $arrayArea, 'Campus Morrinhos' => $arrayArea, 'Campus Urutaí' => $arrayArea, 'Campus Ceres' => $arrayArea, 'Campus Avançado Ipameri' => $arrayArea, 'Campus Posse' => $arrayArea, 'Campus Campos Belos' => $arrayArea, 'Campus Cristalina' => $arrayArea, 'Campus Avançado Hidrolândia' => $arrayArea, 'Campus Avançado Catalão' => $arrayArea, 'Campus Trindade' => $arrayArea, 'foraCampus' => $arrayArea );
         
         $arrayLinhas = array( 'Concluida' => $arrayAnos, 'NConcluida' => $arrayAnos, 'Fluxo' => $arrayAnos );
         $arrayBarras = array( 'vert' => $arrayAnos, 'reingresso' => $arrayAnos );
         $arrayPizzas = array( 'vert' => $arrayFase, 'reingresso' => $arrayFase );
 
-        $arrayGraficos = array( 'linhas' => $arrayLinhas, 'barras' => $arrayBarras, 'pizzas' => $arrayPizzas );
+        $resultado = array( 'linhas' => $arrayLinhas, 'barras' => $arrayBarras, 'pizzas' => $arrayPizzas );
 
-        $resultado = array( 'eixo' => $arrayGraficos, 'foraEixo' => $arrayGraficos, 'independente' => $arrayGraficos );
-
+        // $resultado = array( 'eixo' => $arrayGraficos, 'foraEixo' => $arrayGraficos, 'independente' => $arrayGraficos );
 
         $alunos = array_column($dados, 'aluno'); // pega a key especifica em cada objeto dentro do array
         
@@ -167,36 +169,63 @@ class Visualizacoes {
                                 $fase = "NConcluida"; // Verticalização Reingresso Não Concluída
                             }
                             
-                        }
-
-                        if ($dadosAluno[$i]->codAreaConhecimento == $dadosAluno[$j]->codAreaConhecimento) {
-                            $eixo = "eixo";
                         } else {
-                            $eixo = "foraEixo";
+                            break;
                         }
+                        
+                        if ($fase == 'Concluida') {
+                            $ano = $dadosAluno[$j]->anoLetConclusao;
+                        } elseif ($fase == 'NConcluida') {
+                            $ano = $dadosAluno[$j]->anoLetAtual;
+                        } elseif ($fase == 'Fluxo') {
+                            $ano = $dadosAluno[$j]->anoLetInicio;
+                        } 
 
-                        $ano = $dadosAluno[$j]->anoLetInicio;
+                        if ($ano == "") {
+                            $ano = $dadosAluno[$j]->anoLetAtual;
+                        }
+                        
+
                         $campus = $dadosAluno[$j]->descInstituicao;
                         $area = $dadosAluno[$j]->descAreaConhecimento;
-                        $sexo = $dadosAluno[$j]->sexo;
 
                         if ($dadosAluno[$i]->codInstituicao == $dadosAluno[$j]->codInstituicao) {
-                            if (!isset($resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area])) $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
-                            if (!isset($resultado['independente']['tabela'][$tipo.$fase][$campus][$area])) $resultado['independente']['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
+
+                            if(!isset($resultado['tabela'][$tipo.$fase][$campus]['foraArea']))
+                                $resultado['tabela'][$tipo.$fase][$campus]['foraArea'] = $arrayAnos;
                             
-                            $resultado[$eixo]['tabela'][$tipo.$fase][$campus][$area][$ano]++;
-                            $resultado['independente']['tabela'][$tipo.$fase][$campus][$area][$ano]++;
+                            if(!isset($resultado['tabela'][$tipo.$fase][$campus][$area]))
+                                $resultado['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
+                            
+                            
+                            if ($dadosAluno[$i]->codAreaConhecimento != $dadosAluno[$j]->codAreaConhecimento) {
+                                $resultado['tabela'][$tipo.$fase][$campus]['foraArea'][$ano]++;
+                            } else {                                
+                                $resultado['tabela'][$tipo.$fase][$campus][$area][$ano]++;
+                            }
+                            
+                        } else {
+                            
+                            if(!isset($resultado['tabela'][$tipo.$fase]['foraCampus']['foraArea']))
+                                $resultado['tabela'][$tipo.$fase]['foraCampus']['foraArea'] = $arrayAnos;
+                            
+                            if(!isset($resultado['tabela'][$tipo.$fase]['foraCampus'][$area]))
+                                $resultado['tabela'][$tipo.$fase]['foraCampus'][$area] = $arrayAnos;
+                            
+                            if ($dadosAluno[$i]->codAreaConhecimento != $dadosAluno[$j]->codAreaConhecimento) {
+                                $resultado['tabela'][$tipo.$fase]['foraCampus']['foraArea'][$ano]++;
+                            } else {                                
+                                $resultado['tabela'][$tipo.$fase]['foraCampus'][$area][$ano]++;
+                            }          
                         }
 
-                        // buscar quais dos alunos que começaram em 2015 que tem matriculas em anos anteriores
+                        if(!isset($resultado['linhas'][$fase][$ano])) $resultado['linhas'][$fase][$ano] = 0;
+                        if(!isset($resultado['barras'][$tipo][$ano])) $resultado['barras'][$tipo][$ano] = 0;
+                        if(!isset($resultado['pizzas'][$tipo][$fase])) $resultado['pizzas'][$tipo][$fase] = 0;
 
-                        $resultado[$eixo]['linhas'][$fase][$ano]++;
-                        $resultado[$eixo]['barras'][$tipo][$ano]++;
-                        $resultado[$eixo]['pizzas'][$tipo][$fase]++;
-                        
-                        $resultado['independente']['linhas'][$fase][$ano]++;
-                        $resultado['independente']['barras'][$tipo][$ano]++;
-                        $resultado['independente']['pizzas'][$tipo][$fase]++;
+                        $resultado['linhas'][$fase][$ano]++;
+                        $resultado['barras'][$tipo][$ano]++;
+                        $resultado['pizzas'][$tipo][$fase]++;
                     }
                 }
             }

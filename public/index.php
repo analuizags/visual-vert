@@ -151,11 +151,11 @@
                     <h1 class="h2 titulo">Visualização</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
 
-                        <select class="custom-select custom-select-sm" id="tipoVerticalizacao">
+                        <!-- <select class="custom-select custom-select-sm" id="tipoVerticalizacao">
                             <option selected value="0">Independente de Eixo</option>
                             <option value="1">Mesmo Eixo</option>
                             <option value="2">Fora do Eixo</option>
-                        </select>
+                        </select> -->
 
                     </div>
                 </div>
@@ -195,6 +195,12 @@
                             <tr>
                                 <th scope="col">Unidade de Ensino</th>
                                 <th scope="col">Área de Conhecimento</th>
+                                <th scope="col">2009</th>
+                                <th scope="col">2010</th>
+                                <th scope="col">2011</th>
+                                <th scope="col">2012</th>
+                                <th scope="col">2013</th>
+                                <th scope="col">2014</th>
                                 <th scope="col">2015</th>
                                 <th scope="col">2016</th>
                                 <th scope="col">2017</th>
@@ -204,94 +210,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr>
+                            <tr>
                                 <td scope="row" colspan="8" class="align-middle text-center">Esperando resultados!</td>
-                            </tr> -->
-                            <tr>
-                                <td scope="row" rowspan="2" class="align-middle">Campus Ceres</td>
-                                <td class="align-middle">Ciências Exatas e da Terra</td>
-                                <td>0</td>
-                                <td>2</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">Multidisciplinar</td>
-                                <td>0</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" rowspan="2" class="align-middle">Campus Rio Verde</td>
-                                <td class="align-middle">Multidisciplinar</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">Ciências Agrárias</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" rowspan="1" class="align-middle">Campus Avançado Ipameri</td>
-                                <td class="align-middle">Ciências Sociais Aplicadas</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>5</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" rowspan="3" class="align-middle">Campus Urutaí</td>
-                                <td class="align-middle">Ciências Exatas e da Terra</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">Multidisciplinar</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">Ciências Agrárias</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" rowspan="1" class="align-middle">Campus Iporá</td>
-                                <td class="align-middle">Ciências Agrárias</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>2</td>
-                                <td>0</td>
-                                <td>0</td>
                             </tr>
                         </tbody>
                     </table>

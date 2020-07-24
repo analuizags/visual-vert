@@ -65,7 +65,9 @@ class Visualizacao extends CRUD {
                 $whereValor[] = end($busca['anoLetInicio']);
             } else {
                 $whereCondicao .= " AND m.anoLetInicio >= ? ";
-                $whereValor[] = 2015;
+                // $whereCondicao .= " AND (m.anoLetInicio >= ? OR m.anoLetAtual >= ?) ";
+                $whereValor[] = 2009;
+                // $whereValor[] = 2015;
             }
 
             if (isset($busca['codAreaConhecimento']) && !empty($busca['codAreaConhecimento']) && count($busca['codAreaConhecimento']) != 7) {
@@ -115,6 +117,10 @@ class Visualizacao extends CRUD {
                 $whereCondicao .= " ?)";
                 $whereValor[] = end($busca['aluno']);
             }
+
+            // $whereCondicao .= " c.nivel != ?";
+            // $whereValor[] = 1;
+
         }    
 
         // print_r($whereValor);
