@@ -64,8 +64,15 @@ function enviarFormulario() {
 		unidades = [], 
 		areas = [];
 
+	campus.find(":selected").each(function() {
+		unidades.push($(this).text());
+	});
+
+	area.find(":selected").each(function() {
+		areas.push($(this).text());
+	});
+
 	let tb = {
-		anos: ano.text(),
 		unidades: unidades,
 		areas: areas
 	};
@@ -74,8 +81,8 @@ function enviarFormulario() {
 		periodos: ano.text(),
 		sexo: sexo.val(),
 		codInstituicao: campus.val(),
-		codAreaConhecimento: area.val()
-		// tabela: tb
+		codAreaConhecimento: area.val(),
+		tabela: tb
 	};
 
 	dados.acao = "Visualizacoes/filtrar";
@@ -237,8 +244,8 @@ function gerarGrafico(dados) {
 					}
 				}],
 				xAxes: [{
-					barPercentage: 0.7,
-					categoryPercentage: 0.7,
+					// barPercentage: 0.7,
+					// categoryPercentage: 0.7,
 					scaleLabel: {
 						display: true,
 						labelString: 'Anos',

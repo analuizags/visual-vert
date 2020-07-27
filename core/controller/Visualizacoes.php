@@ -68,8 +68,9 @@ class Visualizacoes {
         $dados['anoLetAtual'] = $aux[1];
         unset($dados['periodos']);
 
-        // $linhasColunas = $dados['tabela'];
-        // unset($dados['tabela']);
+        $linhasColunas = $dados['tabela'];
+        $linhasColunas['anos'] = array($aux[0], $aux[1]);
+        unset($dados['tabela']);
         
         $campos = " a.codigo AS aluno";
         
@@ -99,7 +100,7 @@ class Visualizacoes {
         // print_r($lista);
 
         try {
-            $resultado = $this->calcularVert($lista, $dados['aluno']);
+            $resultado = $this->calcularVert($lista, $dados['aluno'], $linhasColunas);
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }
@@ -110,26 +111,36 @@ class Visualizacoes {
         // return "<br>Este método está sendo chamado!";
     } 
 
-    public function calcularVert($dados, $codigos) {
+    public function setArray($estrutura, $valor) {
+        foreach ($estrutura as $key => $value) {
+            $estrutura[$key] = $valor;
+        }
+
+        return $estrutura;
+    }
+
+    public function calcularVert($dados, $codigos, $arrays) {
 
         $concluido = [5, 6, 12, 13, 15, 18, 19, 23, 24];
         $matriculado = [0, 14, 16, 21];
         $evadido = [2, 3, 4, 7, 8, 9, 10, 11, 20, 22];
 
         // resposta padrão
-        $arrayAnos = array( '2009' => 0, '2010' => 0, '2011' => 0, '2012' => 0, '2013' => 0, '2014' => 0, '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 );
-        // $arrayAnos = array( '2015' => 0, '2016' => 0, '2017' => 0, '2018' => 0, '2019' => 0, '2020' => 0 );
         $arrayFase = array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 );
-        $arrayArea = array( 'Ciências Sociais Aplicadas' => $arrayAnos, 'Ciências Agrárias' => $arrayAnos, 'Ciências Exatas e da Terra' => $arrayAnos, 'Multidisciplinar' => $arrayAnos, 'Ciências Biológicas' => $arrayAnos, 'Engenharias' => $arrayAnos, 'Ciências da Saúde' => $arrayAnos, 'foraArea' => $arrayAnos ) ;
-        $arrayCampus = array( 'Campus Rio Verde' => $arrayArea, 'Campus Iporá' => $arrayArea, 'Campus Morrinhos' => $arrayArea, 'Campus Urutaí' => $arrayArea, 'Campus Ceres' => $arrayArea, 'Campus Avançado Ipameri' => $arrayArea, 'Campus Posse' => $arrayArea, 'Campus Campos Belos' => $arrayArea, 'Campus Cristalina' => $arrayArea, 'Campus Avançado Hidrolândia' => $arrayArea, 'Campus Avançado Catalão' => $arrayArea, 'Campus Trindade' => $arrayArea, 'foraCampus' => $arrayArea );
+
+        $arrayAnos = array_fill($arrays['anos'][0], ($arrays['anos'][1] - $arrays['anos'][0])+1, 0);
+        
+        $arrayAreas = array_flip($arrays['areas']);
+        $arrayAreas = $this->setArray($arrayAreas, 0);
+        
+        $arrayCampus = array_flip($arrays['unidades']);
+        $arrayCampus = $this->setArray($arrayCampus, $arrayAreas);
         
         $arrayLinhas = array( 'Concluida' => $arrayAnos, 'NConcluida' => $arrayAnos, 'Fluxo' => $arrayAnos );
         $arrayBarras = array( 'vert' => $arrayAnos, 'reingresso' => $arrayAnos );
         $arrayPizzas = array( 'vert' => $arrayFase, 'reingresso' => $arrayFase );
 
         $resultado = array( 'linhas' => $arrayLinhas, 'barras' => $arrayBarras, 'pizzas' => $arrayPizzas );
-
-        // $resultado = array( 'eixo' => $arrayGraficos, 'foraEixo' => $arrayGraficos, 'independente' => $arrayGraficos );
 
         $alunos = array_column($dados, 'aluno'); // pega a key especifica em cada objeto dentro do array
         
@@ -238,6 +249,6 @@ class Visualizacoes {
         // echo "<pre>";
         // print_r($resultado);
 
-        return $resultado;
+        return $resultado; 
     }
 }
