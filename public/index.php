@@ -6,12 +6,16 @@
 
     <!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+    <!-- jQuery UI core CSS -->
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 
     <!-- Fonts do Google -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet"> 
 
     <!-- Estilo próprio -->
     <link rel="stylesheet" href="assets/css/estilo.css">
+    <link rel="stylesheet" href="assets/css/sliderRange.css">
     <!-- <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="assets/css/multiple-select.css">
     
@@ -34,7 +38,9 @@
         $opcoesFiltro = $visualizacoes->opcoesFiltro();
 
         // echo "<pre>";
-        // print_r($opcoesFiltro);  
+        // print_r(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));  
+        $anoMax = max(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));
+        $anoMin = min(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));
 
     ?>
 
@@ -84,18 +90,26 @@
                         <ul class="nav flex-column mb-2">
                             <li class="nav-item">
                                 <span class="nav-link">
+                                    <label class="ml-1">Períodos:</label>
+                                    <span class="ml-1 intervalo-ano" data-max="<?= $anoMax ?>" data-min="<?= $anoMin ?>"></span>
+                                    <div class="slider-range" id="ano"></div>
+                                </span>
+                            </li>
+
+                            <!-- <li class="nav-item">
+                                <span class="nav-link">
                                     <label class="ml-1">Períodos</label><br>
                                     <select data-placeholder="Escolha o período" class="mp-select" id="ano" multiple="multiple">
                                         <?php 
-                                            if (count((array)$opcoesFiltro["periodos"][0]) > 0) {
-                                                foreach ($opcoesFiltro["periodos"] as $key => $value) {
-                                                    echo "<option value='$value->anoLetInicio' selected>$value->anoLetInicio</option>";
-                                                }
-                                            }
+                                            // if (count((array)$opcoesFiltro["periodos"][0]) > 0) {
+                                            //     foreach ($opcoesFiltro["periodos"] as $key => $value) {
+                                            //         echo "<option value='$value->anoLetInicio' selected>$value->anoLetInicio</option>";
+                                            //     }
+                                            // }
                                         ?>
                                     </select>
                                 </span>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <span class="nav-link">
                                     <label class="ml-1">Gênero</label><br>
@@ -180,12 +194,13 @@
                     <h2 class="titulo">Detalhamento</h2>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <select class="custom-select custom-select-sm" id="faseVerticalizacao">
-                            <option value="0" selected>Verticalização Concluída</option>
-                            <option value="1">Verticalização Não Concluída</option>
-                            <option value="2">Verticalização em Fluxo</option>
-                            <option value="3">Verticalização Reingresso Concluída</option>
-                            <option value="4">Verticalização Reingresso Não Concluída</option>
-                            <option value="5">Verticalização Reingresso em Fluxo</option>
+                            <option value="0" selected>Independente da fase</option>
+                            <option value="1">Verticalização Concluída</option>
+                            <option value="2">Verticalização Não Concluída</option>
+                            <option value="3">Verticalização em Fluxo</option>
+                            <option value="4">Verticalização Reingresso Concluída</option>
+                            <option value="5">Verticalização Reingresso Não Concluída</option>
+                            <option value="6">Verticalização Reingresso em Fluxo</option>
                         </select>
                     </div>
                 </div>
