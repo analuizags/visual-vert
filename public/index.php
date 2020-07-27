@@ -92,24 +92,9 @@
                                 <span class="nav-link">
                                     <label class="ml-1">Períodos:</label>
                                     <span class="ml-1 intervalo-ano" data-max="<?= $anoMax ?>" data-min="<?= $anoMin ?>"></span>
-                                    <div class="slider-range" id="ano"></div>
+                                    <div class="slider-range mr-2" id="ano"></div>
                                 </span>
                             </li>
-
-                            <!-- <li class="nav-item">
-                                <span class="nav-link">
-                                    <label class="ml-1">Períodos</label><br>
-                                    <select data-placeholder="Escolha o período" class="mp-select" id="ano" multiple="multiple">
-                                        <?php 
-                                            // if (count((array)$opcoesFiltro["periodos"][0]) > 0) {
-                                            //     foreach ($opcoesFiltro["periodos"] as $key => $value) {
-                                            //         echo "<option value='$value->anoLetInicio' selected>$value->anoLetInicio</option>";
-                                            //     }
-                                            // }
-                                        ?>
-                                    </select>
-                                </span>
-                            </li> -->
                             <li class="nav-item">
                                 <span class="nav-link">
                                     <label class="ml-1">Gênero</label><br>

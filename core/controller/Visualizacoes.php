@@ -189,18 +189,24 @@ class Visualizacoes {
                         }
                         
                         if ($fase == 'Concluida') {
-                            $ano = $dadosAluno[$j]->anoLetConclusao;
+                            if ($dadosAluno[$j]->anoLetConclusao != "") {
+                                $ano = $dadosAluno[$j]->anoLetConclusao;
+                            } elseif ($dadosAluno[$j]->anoLetAtual != "") {
+                                $ano = $dadosAluno[$j]->anoLetAtual;
+                            } else {
+                                $ano = $dadosAluno[$j]->anoLetInicio;
+                            }
                         } elseif ($fase == 'NConcluida') {
-                            $ano = $dadosAluno[$j]->anoLetAtual;
+                            if ($dadosAluno[$j]->anoLetAtual != "") {
+                                $ano = $dadosAluno[$j]->anoLetAtual;
+                            } else {
+                                $ano = $dadosAluno[$j]->anoLetInicio;
+                            }
                         } elseif ($fase == 'Fluxo') {
                             $ano = $dadosAluno[$j]->anoLetInicio;
                         } 
-
-                        if ($ano == "") {
-                            $ano = $dadosAluno[$j]->anoLetAtual;
-                        }
                         
-
+                        
                         $campus = $dadosAluno[$j]->descInstituicao;
                         $area = $dadosAluno[$j]->descAreaConhecimento;
 

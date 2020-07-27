@@ -49,8 +49,7 @@ var res = 0;
 
 		$(".intervalo-ano").empty();
 		$(".intervalo-ano").append(
-			$( ".slider-range").slider("values", 0) + " - " +
-			$( ".slider-range" ).slider("values", 1)
+			$(".slider-range").slider("values", 0) + " - " + $(".slider-range").slider("values", 1)
 		);
 	});
 
@@ -116,20 +115,6 @@ function enviarFormulario() {
 	});
 }
 
-function verificarTipo() {
-	
-	let tipo = $('#tipoVerticalizacao').find(":selected").val();
-				
-	if (tipo == 1) { // mesmo eixo
-		return res.eixo;
-	} else if (tipo == 2) { // fora do eixo
-		return res.foraEixo;
-	} else {
-		return res.independente;
-	}
-
-}
-
 function verificarFase(dados) {
 	
 	let tipo = $('#faseVerticalizacao').find(":selected").val();
@@ -165,15 +150,13 @@ function resetCanvas(){
 	$('#gBar').append('<canvas class="" width="700" height="500" id="chartBar"></canvas>');
 	$('#gVert').append('<canvas class="" width="365" height="250" id="chartVert"></canvas>');
 	$('#gRein').append('<canvas class="" width="365" height="250" id="chartReingresso"></canvas>');
-	
-	// ctxBar = document.getElementById('myChart').getContext('2d');
 };
 
 function gerarGrafico(dados) {
 
 	// var coresArea = [cores[1], cores[3], cores[5],cores[7],cores[9],cores[11],cores[12],cores[13],cores[14]];
 	var coresBarras = ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'];
-	var lbs = ['2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];            
+	var lbs = Object.keys(dados.barras.vert);
         
 	resetCanvas();
 
@@ -347,14 +330,21 @@ function gerarGrafico(dados) {
 
 function gerarTabela(dados) {
 	
-	let corpoTabela = "";
-
+	let corpoTabela = "", 
+		cabecaTabela = '<tr> <th scope="col">Unidade de Ensino</th><th scope="col">Área de Conhecimento</th>',
+		anos = Object.keys(dados[Object.keys(dados)[0]][Object.keys(dados[Object.keys(dados)[0]])[0]]);
+	
 	$('table > thead').empty();
-	$('table > thead').append('<tr> <th scope="col">Unidade de Ensino</th> <th scope="col">Área de Conhecimento</th> <th scope="col">2009</th> <th scope="col">2010</th> <th scope="col">2011</th> <th scope="col">2012</th> <th scope="col">2013</th> <th scope="col">2014</th> <th scope="col">2015</th> <th scope="col">2016</th> <th scope="col">2017</th> <th scope="col">2018</th> <th scope="col">2019</th> <th scope="col">2020</th> </tr>');
+
+	for (let key in anos) {
+		cabecaTabela += '<th scope="col">' + anos[key] + '</th>';
+	}
+
+	cabecaTabela += '</tr>';
+	$('table > thead').append(cabecaTabela);
+
 	for (let campus in dados) {
 		if (dados.hasOwnProperty(campus)) {
-			// console.log(campus + ' - ' + Object.keys(dados[campus]).length + '\n');
-			// console.log(dados[campus]);
 
 			corpoTabela += '<tr><td scope="row" rowspan="' + Object.keys(dados[campus]).length + '" class="align-middle">' + campus + '</td>';
 			let flag = false;
