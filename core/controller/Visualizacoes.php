@@ -63,8 +63,14 @@ class Visualizacoes {
     public function filtrar($dados) {
         $visualizacao = new Visualizacao();
 
-        // $linhasColunas = $dados['tabela'];
-        // unset($dados['tabela']);
+        $aux = explode(" - ", $dados['periodos']);
+        $dados['anoLetInicio'] = $aux[0];
+        $dados['anoLetAtual'] = $aux[1];
+        unset($dados['periodos']);
+        print_r($dados);
+
+        $linhasColunas = $dados['tabela'];
+        unset($dados['tabela']);
         
         $campos = " a.codigo AS aluno";
         

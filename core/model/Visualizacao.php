@@ -38,7 +38,8 @@ class Visualizacao extends CRUD {
 
         if ($campos == 'anoLetInicio') {
             $whereCondicao .= " AND " . self::COL_ANO_INICIO . " >= ?";
-            $whereValor[] = '2015';
+            $whereValor[] = '2009';
+            $ordem = "anoLetInicio";
         }
 
         if ($assunto == 'filtro') {
@@ -53,21 +54,20 @@ class Visualizacao extends CRUD {
         }
 
         if (count((array)$busca) > 0) {
-            if (isset($busca['anoLetInicio']) && !empty($busca['anoLetInicio']) && count($busca['anoLetInicio']) != 6) {
-                $whereCondicao .= " AND m.anoLetInicio IN (";
-
-                for ($i=0; $i < count($busca['anoLetInicio'])-1; $i++) { 
-                    $whereCondicao .= "?, ";
-                    $whereValor[] = $busca['anoLetInicio'][$i];
-                }
-
-                $whereCondicao .= " ?)";
-                $whereValor[] = end($busca['anoLetInicio']);
+            if (isset($busca['anoLetInicio']) && !empty($busca['anoLetInicio'])) {
+                $whereCondicao .= " AND m.anoLetInicio >= ? ";
+                $whereValor[] = $busca['anoLetInicio'];
             } else {
                 $whereCondicao .= " AND m.anoLetInicio >= ? ";
-                // $whereCondicao .= " AND (m.anoLetInicio >= ? OR m.anoLetAtual >= ?) ";
                 $whereValor[] = 2009;
-                // $whereValor[] = 2015;
+            }
+
+            if (isset($busca['anoLetAtual']) && !empty($busca['anoLetAtual'])) {
+                $whereCondicao .= " AND m.anoLetAtual <= ? ";
+                $whereValor[] = $busca['anoLetAtual'];
+            } else {
+                $whereCondicao .= " AND m.anoLetAtual <= ? ";
+                $whereValor[] = 2020;
             }
 
             if (isset($busca['codAreaConhecimento']) && !empty($busca['codAreaConhecimento']) && count($busca['codAreaConhecimento']) != 7) {

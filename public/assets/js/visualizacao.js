@@ -30,41 +30,48 @@ var res = 0;
 		}, 1500)	
 	});
 
-	// $('#tipoVerticalizacao').change().setTimeout(verificarTipo(), 3000);
-	// $('#faseVerticalizacao').change().setTimeout(verificarFase(), 3000);
+
+	// range slider
+	$(function() {	
+		var max = parseInt($(".intervalo-ano").attr("data-max"), 10),
+			min = parseInt($(".intervalo-ano").attr("data-min"), 10);
+
+		$(".slider-range").slider({
+		  range: true,
+		  min: min,
+		  max: max,
+		  values: [ min, max ],
+		  slide: function( event, ui ) {
+			$(".intervalo-ano").empty();
+			$(".intervalo-ano").append(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+		  }
+		});
+
+		$(".intervalo-ano").empty();
+		$(".intervalo-ano").append(
+			$( ".slider-range").slider("values", 0) + " - " +
+			$( ".slider-range" ).slider("values", 1)
+		);
+	});
 
 }());
 
 function enviarFormulario() {
-	let ano = $('#ano'),
+	let ano = $('.intervalo-ano'),
 		sexo = $('#sexo'),
 		campus = $('#campus'),
 		area = $('#area'),
-		anos = [], 
 		unidades = [], 
 		areas = [];
-	
-
-	ano.find(":selected").each(function() {
-		anos.push($(this).text());
-	});
-	
-	campus.find(":selected").each(function() {
-		unidades.push($(this).text());
-	});
-
-	area.find(":selected").each(function() {
-		areas.push($(this).text());
-	});
 
 	let tb = {
-		anos: anos,
+		anos: ano.text(),
 		unidades: unidades,
 		areas: areas
 	};
 
 	let dados = {
-		anoLetInicio: ano.val(),
+		periodos: ano.text(),
 		sexo: sexo.val(),
 		codInstituicao: campus.val(),
 		codAreaConhecimento: area.val()
@@ -72,7 +79,7 @@ function enviarFormulario() {
 	};
 
 	dados.acao = "Visualizacoes/filtrar";
-	// console.log(tb);
+	// console.log(dados);
 
 	$('.loader-graficos').removeAttr('hidden');
 
