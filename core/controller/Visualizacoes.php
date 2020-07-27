@@ -67,18 +67,16 @@ class Visualizacoes {
         $dados['anoLetInicio'] = $aux[0];
         $dados['anoLetAtual'] = $aux[1];
         unset($dados['periodos']);
-        print_r($dados);
 
-        $linhasColunas = $dados['tabela'];
-        unset($dados['tabela']);
+        // $linhasColunas = $dados['tabela'];
+        // unset($dados['tabela']);
         
         $campos = " a.codigo AS aluno";
         
         $listaCodigos = $visualizacao->listar('codigos', $campos, $dados, null);
         $dados['aluno'] = array_column($listaCodigos, 'aluno');
         
-        $campos = "
-                    a.codigo AS aluno,
+        $campos = " a.codigo AS aluno,
                     a.sexo AS sexo,
                     m.anoLetAtual AS anoLetAtual,
                     m.anoLetInicio AS anoLetInicio,
