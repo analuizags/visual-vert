@@ -212,7 +212,11 @@ class Visualizacoes {
                             if(!isset($resultado['tabela'][$tipo.$fase][$campus][$area]))
                                 $resultado['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
                             
+                            if(!isset($resultado['tabela']['independente'][$campus][$area]))
+                                $resultado['tabela']['independente'][$campus][$area] = $arrayAnos;
+                            
                             $resultado['tabela'][$tipo.$fase][$campus][$area][$ano]++;
+                            $resultado['tabela']['independente'][$campus][$area][$ano]++;
                             
                         }
 
@@ -228,9 +232,81 @@ class Visualizacoes {
             }
         }
         
-        // $resultado['tabela'] = $this->calcularPorcentagem($resultado['tabela'], $situacoes, $filtros);
+        $resultado['tabela'] = $this->calcularPorcentagem($resultado['tabela'], $situacoes, $filtros);
 
         return $resultado; 
     }
 
+    public function calcularPorcentagem($dados, $situacoes, $busca) {
+        $visualizacao = new Visualizacao();
+        
+        foreach ($dados as $tipo => $unidades) { 
+            // print_r($unidades);    
+            
+            if (strpos($tipo, 'Concluida')) {
+                $busca['situacao'] = $situacoes['concluido'];   
+                $ano = 'anoLetConclusao';             
+            } elseif (strpos($tipo, 'NConcluida')) {
+                $busca['situacao'] = $situacoes['evadido'];
+                $ano = 'anoLetAtual';
+            } elseif (strpos($tipo, 'Fluxo')) {
+                $busca['situacao'] = $situacoes['matriculado'];
+                $ano = 'anoLetInicio';
+            } else {
+                $busca['situacao'] = "";
+                $ano = 'anoLetInicio';
+            }
+
+            
+            // $campos = " i.codigo AS codInstituicao,
+            //             ac.codigo AS codAreaConhecimento,
+            //             m.$ano AS ano,
+            //             count(m.$ano) AS qtde";
+            $campos = " m.$ano AS ano,
+                        count(m.$ano) AS qtde";
+            
+            
+            $ordem = "i.codigo, ac.codigo, m.$ano";
+            
+            // $lista = $visualizacao->listar('porcentagem', $campos, $busca, $ordem);
+            // print_r($lista);
+            // $instituicoes = array_column($lista, 'codInstituicao');
+            // $area = array_column($lista, 'codAreaConhecimento');
+            // $ano = array_column($lista, 'ano');
+            // $qtde = array_column($lista, 'qtde');
+
+            // print_r($instituicoes);
+            // print_r($area);
+            // print_r($ano);
+            // print_r($qtde);
+            
+
+            foreach ($unidades as $unidade => $areas) {
+                foreach ($areas as $area => $anos) {
+                    $busca['codInstituicao'] = [$unidade];
+                    $busca['codAreaConhecimento'] = [$area];
+                    
+                    $lista = $visualizacao->listar('porcentagem', $campos, $busca, $ordem);
+                    // print_r($lista);
+
+                    $ano = array_column($lista, 'ano');
+                    $qtde = array_column($lista, 'qtde');
+
+                    foreach ($anos as $key => $value) {
+                        $a = array_search($key, $ano);
+                        
+                        if (isset($qtde[$a]) && !empty($qtde[$a]) && $qtde[$a] != 0) {
+                            // echo "$key: $a / $qtde[$a] * 100 <br>";
+                            $dados[$tipo][$unidade][$area][$key] = round((($value/$qtde[$a])*100), 2); // calculo
+                        } else {
+                            // $dados[$tipo][$unidade][$area][$key] = '#';
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return $dados;
+    }
 }

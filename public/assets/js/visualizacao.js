@@ -120,22 +120,25 @@ function verificarFase(dados) {
 	let tipo = $('#faseVerticalizacao').find(":selected").val();
 				
 	if (tipo == 0) { // vert concluida
-		gerarTabela(dados.vertConcluida);
+		gerarTabela(dados.independente);
 		// console.log(dados);
-
+		
 	} else if (tipo == 1) { // vert nao concluida
-		gerarTabela(dados.vertNConcluida);
-
+		gerarTabela(dados.vertConcluida);
+		
 	} else if (tipo == 2) { // vert em fluxo
-		gerarTabela(dados.vertFluxo);
-
+		gerarTabela(dados.vertNConcluida);
+		
 	} else if (tipo == 3) { // vert reingresso concluida
-		gerarTabela(dados.reingressoConcluida);
-
+		gerarTabela(dados.vertFluxo);
+		
 	} else if (tipo == 4) { // vert reingresso nao concluida
+		gerarTabela(dados.reingressoConcluida);
+		
+	} else if (tipo == 5){ // vert reingresso em fluxo
 		gerarTabela(dados.reingressoNConcluida);
 
-	} else if (tipo == 5){ // vert reingresso em fluxo
+	} else if (tipo == 6){ // vert reingresso em fluxo
 		gerarTabela(dados.reingressoFluxo);
 	}
 

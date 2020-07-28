@@ -159,7 +159,6 @@
                     </div>
                 </div>
 
-                <!-- <div id="aqui" style="border-stye:solid; width:100%; height:500px; display:flex"></div> -->
                 <div class="row mb-5">
                     <div class="col-md-8" id="gBar">
                         <div class="spinner-grow loader-graficos" role="status" hidden></div>
