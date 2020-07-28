@@ -68,9 +68,9 @@ class Visualizacoes {
         $dados['anoLetAtual'] = $aux[1];
         unset($dados['periodos']);
 
-        $linhasColunas = $dados['tabela'];
-        $linhasColunas['anos'] = array($aux[0], $aux[1]);
-        unset($dados['tabela']);
+        // $linhasColunas = $dados['tabela'];
+        // $anos = [$aux[0], $aux[1]];
+        // unset($dados['tabela']);
         
         $campos = " a.codigo AS aluno";
         
@@ -89,18 +89,14 @@ class Visualizacoes {
                     ac.codigo AS codAreaConhecimento,
                     ac.descricao AS descAreaConhecimento,
                     i.codigo AS codInstituicao,
-                    i.descricao AS descInstituicao";            
+                    i.descricao AS descInstituicao";
         
         $ordem = "a.codigo, m.anoLetInicio, m.anoLetConclusao";
 
         $lista = $visualizacao->listar(null, $campos, $dados, $ordem);
 
-        // echo "<pre>";
-        // print_r($linhasColunas);
-        // print_r($lista);
-
         try {
-            $resultado = $this->calcularVert($lista, $dados['aluno'], $linhasColunas);
+            $resultado = $this->calcularVert($lista, $dados);
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }
@@ -108,7 +104,6 @@ class Visualizacoes {
         // $this->__set("listaVisualizacao", $resultado);
         
         return json_encode($resultado);
-        // return "<br>Este método está sendo chamado!";
     } 
 
     public function setArray($estrutura, $valor) {
@@ -119,22 +114,21 @@ class Visualizacoes {
         return $estrutura;
     }
 
-    public function calcularVert($dados, $codigos, $arrays) {
+    public function calcularVert($dados, $filtros) {
 
-        $concluido = [5, 6, 12, 13, 15, 18, 19, 23, 24];
-        $matriculado = [0, 14, 16, 21];
-        $evadido = [2, 3, 4, 7, 8, 9, 10, 11, 20, 22];
+        $codigos = $filtros['aluno'];
+        unset($filtros['aluno']);
+
+        $situacoes = [
+            'concluido' => array(5, 6, 12, 13, 15, 18, 19, 23, 24),
+            'matriculado' => array(0, 14, 16, 21),
+            'evadido' => array(2, 3, 4, 7, 8, 9, 10, 11, 20, 22)
+        ];
 
         // resposta padrão
         $arrayFase = array( 'Concluida' => 0, 'NConcluida' => 0, 'Fluxo' => 0 );
 
-        $arrayAnos = array_fill($arrays['anos'][0], ($arrays['anos'][1] - $arrays['anos'][0])+1, 0);
-        
-        $arrayAreas = array_flip($arrays['areas']);
-        $arrayAreas = $this->setArray($arrayAreas, 0);
-        
-        $arrayCampus = array_flip($arrays['unidades']);
-        $arrayCampus = $this->setArray($arrayCampus, $arrayAreas);
+        $arrayAnos = array_fill($filtros['anoLetInicio'], ($filtros['anoLetAtual'] - $filtros['anoLetInicio'])+1, 0);
         
         $arrayLinhas = array( 'Concluida' => $arrayAnos, 'NConcluida' => $arrayAnos, 'Fluxo' => $arrayAnos );
         $arrayBarras = array( 'vert' => $arrayAnos, 'reingresso' => $arrayAnos );
@@ -148,7 +142,6 @@ class Visualizacoes {
 
             $dadosAluno = [];            
             $search = $value;
-            // $search = 3553;
 
             while (!empty($key = array_search($search, $alunos))) {
                 $dadosAluno[] = $dados[$key];
@@ -160,27 +153,27 @@ class Visualizacoes {
                     
                     if ($dadosAluno[$i]->nivelCurso < $dadosAluno[$j]->nivelCurso) { // se subir de nível
                         
-                        if (in_array($dadosAluno[$i]->situacao, $concluido)) {
+                        if (in_array($dadosAluno[$i]->situacao, $situacoes['concluido'])) {
 
                             $tipo = "vert";
                             
-                            if (in_array($dadosAluno[$j]->situacao, $concluido)) {                                 
+                            if (in_array($dadosAluno[$j]->situacao, $situacoes['concluido'])) {                                 
                                 $fase = "Concluida"; // Verticalização Concluída
-                            } elseif (in_array($dadosAluno[$j]->situacao, $matriculado)) {
+                            } elseif (in_array($dadosAluno[$j]->situacao, $situacoes['matriculado'])) {
                                 $fase = "Fluxo"; // Verticalização Em Fluxo
-                            } elseif (in_array($dadosAluno[$j]->situacao, $evadido)) {
+                            } elseif (in_array($dadosAluno[$j]->situacao, $situacoes['evadido'])) {
                                 $fase = "NConcluida"; // Verticalização Não Concluída
                             }
                             
-                        } elseif (in_array($dadosAluno[$i]->situacao, $evadido)) {
+                        } elseif (in_array($dadosAluno[$i]->situacao, $situacoes['evadido'])) {
 
                             $tipo = "reingresso";
                             
-                            if (in_array($dadosAluno[$j]->situacao, $concluido)) {
+                            if (in_array($dadosAluno[$j]->situacao, $situacoes['concluido'])) {
                                 $fase = "Concluida"; // Verticalização Reingresso Concluída
-                            } elseif (in_array($dadosAluno[$j]->situacao, $matriculado)) {
+                            } elseif (in_array($dadosAluno[$j]->situacao, $situacoes['matriculado'])) {
                                 $fase = "Fluxo"; // Verticalização Reingresso Em Fluxo
-                            } elseif (in_array($dadosAluno[$j]->situacao, $evadido)) {
+                            } elseif (in_array($dadosAluno[$j]->situacao, $situacoes['evadido'])) {
                                 $fase = "NConcluida"; // Verticalização Reingresso Não Concluída
                             }
                             
@@ -205,39 +198,22 @@ class Visualizacoes {
                         } elseif ($fase == 'Fluxo') {
                             $ano = $dadosAluno[$j]->anoLetInicio;
                         } 
-                        
-                        
-                        $campus = $dadosAluno[$j]->descInstituicao;
-                        $area = $dadosAluno[$j]->descAreaConhecimento;
+
+                        $campus = $dadosAluno[$j]->codInstituicao;
+
+                        if ($dadosAluno[$i]->codAreaConhecimento != $dadosAluno[$j]->codAreaConhecimento) {
+                            $area = 'zforaArea';
+                        } else {
+                            $area = $dadosAluno[$j]->codAreaConhecimento;
+                        }
 
                         if ($dadosAluno[$i]->codInstituicao == $dadosAluno[$j]->codInstituicao) {
-
-                            if(!isset($resultado['tabela'][$tipo.$fase][$campus]['foraArea']))
-                                $resultado['tabela'][$tipo.$fase][$campus]['foraArea'] = $arrayAnos;
                             
                             if(!isset($resultado['tabela'][$tipo.$fase][$campus][$area]))
                                 $resultado['tabela'][$tipo.$fase][$campus][$area] = $arrayAnos;
                             
+                            $resultado['tabela'][$tipo.$fase][$campus][$area][$ano]++;
                             
-                            if ($dadosAluno[$i]->codAreaConhecimento != $dadosAluno[$j]->codAreaConhecimento) {
-                                $resultado['tabela'][$tipo.$fase][$campus]['foraArea'][$ano]++;
-                            } else {                                
-                                $resultado['tabela'][$tipo.$fase][$campus][$area][$ano]++;
-                            }
-                            
-                        } else {
-                            
-                            if(!isset($resultado['tabela'][$tipo.$fase]['foraCampus']['foraArea']))
-                                $resultado['tabela'][$tipo.$fase]['foraCampus']['foraArea'] = $arrayAnos;
-                            
-                            if(!isset($resultado['tabela'][$tipo.$fase]['foraCampus'][$area]))
-                                $resultado['tabela'][$tipo.$fase]['foraCampus'][$area] = $arrayAnos;
-                            
-                            if ($dadosAluno[$i]->codAreaConhecimento != $dadosAluno[$j]->codAreaConhecimento) {
-                                $resultado['tabela'][$tipo.$fase]['foraCampus']['foraArea'][$ano]++;
-                            } else {                                
-                                $resultado['tabela'][$tipo.$fase]['foraCampus'][$area][$ano]++;
-                            }          
                         }
 
                         if(!isset($resultado['linhas'][$fase][$ano])) $resultado['linhas'][$fase][$ano] = 0;
@@ -250,11 +226,11 @@ class Visualizacoes {
                     }
                 }
             }
-        }      
+        }
         
-        // echo "<pre>";
-        // print_r($resultado);
+        // $resultado['tabela'] = $this->calcularPorcentagem($resultado['tabela'], $situacoes, $filtros);
 
         return $resultado; 
     }
+
 }

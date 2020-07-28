@@ -81,7 +81,7 @@ function enviarFormulario() {
 		sexo: sexo.val(),
 		codInstituicao: campus.val(),
 		codAreaConhecimento: area.val(),
-		tabela: tb
+		// tabela: tb
 	};
 
 	dados.acao = "Visualizacoes/filtrar";
@@ -354,8 +354,13 @@ function gerarTabela(dados) {
 					if (flag) {
 						corpoTabela += '<tr>';
 					}
-					corpoTabela += '<td class="align-middle">' + area + '</td>';
-					
+
+					if (area == 'zforaArea') {
+						corpoTabela += '<td class="align-middle">Áreas de conhecimento distintas</td>';
+					} else {
+						corpoTabela += '<td class="align-middle">' + area + '</td>';
+					}
+
 					for (let ano in dados[campus][area]) {
 						if (dados[campus][area].hasOwnProperty(ano)) {
 							corpoTabela += '<td>' + dados[campus][area][ano] + '</td>';

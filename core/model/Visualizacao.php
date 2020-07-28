@@ -21,7 +21,7 @@ class Visualizacao extends CRUD {
     const COL_INSTITUICAO_DESC = "descInstituicao";
 
     /**
-     * @param $evento_id
+     * @param 
      * @return array
      */
     public function listar($assunto = null, $campos = null, $busca = [], $ordem = null) {
@@ -33,8 +33,15 @@ class Visualizacao extends CRUD {
         $campos = $campos != null ? $campos : "*";
         $whereCondicao = "1 = 1";
         $whereValor = [];
-        $groupBy = $assunto == 'codigos' ? " aluno HAVING count(aluno) > 1 " : null;
 
+        // group by
+        if ($assunto == 'codigos') {
+            $groupBy = " aluno HAVING count(aluno) > 1 ";
+        } elseif ($assunto == 'porcentagem') {
+            $groupBy = $ordem;
+        } else {
+            $groupBy = null;
+        }
 
         if ($campos == 'anoLetInicio') {
             $whereCondicao .= " AND " . self::COL_ANO_INICIO . " >= ?";
@@ -42,17 +49,19 @@ class Visualizacao extends CRUD {
             $ordem = "anoLetInicio";
         }
 
+        // tabela e/ou inner join
         if ($assunto == 'filtro') {
             $campos = "DISTINCT $campos";
             $tabela = self::TABELA;
         } else {
-            $tabela = "matricula m
+            $tabela = " matricula m
                         INNER JOIN aluno a ON m.aluno = a.codigo
                         INNER JOIN curso c ON m.curso = c.codigo
                         INNER JOIN areaConhecimento ac ON c.areaConhecimento = ac.codigo
                         INNER JOIN instituicao i ON m.instituicao = i.codigo";
         }
 
+        // where
         if (count((array)$busca) > 0) {
             if (isset($busca['anoLetInicio']) && !empty($busca['anoLetInicio'])) {
                 $whereCondicao .= " AND m.anoLetInicio >= ? ";
@@ -116,6 +125,18 @@ class Visualizacao extends CRUD {
 
                 $whereCondicao .= " ?)";
                 $whereValor[] = end($busca['aluno']);
+            }
+
+            if (isset($busca['situacao']) && !empty($busca['situacao'])) {
+                $whereCondicao .= " AND m.situacao IN (";
+
+                for ($i=0; $i < count($busca['situacao'])-1; $i++) { 
+                    $whereCondicao .= "?, ";
+                    $whereValor[] = $busca['situacao'][$i];
+                }
+
+                $whereCondicao .= " ?)";
+                $whereValor[] = end($busca['situacao']);
             }
 
             // $whereCondicao .= " c.nivel != ?";
