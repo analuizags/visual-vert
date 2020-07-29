@@ -27,6 +27,7 @@ class Visualizacao extends CRUD {
     public function listar($assunto = null, $campos = null, $busca = [], $ordem = null) {
 
         if ($campos == 'curso' || $campos == 'areaConhecimento' || $campos == 'instituicao') {
+            $ordem = " desc".ucfirst($campos);
             $campos = "cod".ucfirst($campos).", desc".ucfirst($campos)." ";
         }
         
