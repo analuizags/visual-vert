@@ -21,7 +21,7 @@ class Visualizacao extends CRUD {
     const COL_INSTITUICAO_DESC = "descInstituicao";
 
     /**
-     * @param 
+     * @param assunto da pesquisa, campos da tabela, filtros de busca, ordem da seleção
      * @return array
      */
     public function listar($assunto = null, $campos = null, $busca = [], $ordem = null) {
@@ -34,7 +34,7 @@ class Visualizacao extends CRUD {
         $whereCondicao = "1 = 1";
         $whereValor = [];
 
-        // group by
+        // GROUP BY
         if ($assunto == 'codigos') {
             $groupBy = " aluno HAVING count(aluno) > 1 ";
         } elseif ($assunto == 'porcentagem') {
@@ -49,7 +49,7 @@ class Visualizacao extends CRUD {
             $ordem = "anoLetInicio";
         }
 
-        // tabela e/ou inner join
+        // TABELA e/ou INNER JOIN
         if ($assunto == 'filtro') {
             $campos = "DISTINCT $campos";
             $tabela = self::TABELA;
@@ -61,7 +61,7 @@ class Visualizacao extends CRUD {
                         INNER JOIN instituicao i ON m.instituicao = i.codigo";
         }
 
-        // where
+        // WHERE
         if (count((array)$busca) > 0) {
             if (isset($busca['anoLetInicio']) && !empty($busca['anoLetInicio'])) {
                 $whereCondicao .= " AND m.anoLetInicio >= ? ";
@@ -144,13 +144,10 @@ class Visualizacao extends CRUD {
 
         }    
 
-        // print_r($whereValor);
         $retorno = [];
 
-        try {
-            
+        try {            
             $retorno = $this->read($tabela, $campos, $whereCondicao, $whereValor, $groupBy, $ordem);
-            
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }

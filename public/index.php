@@ -6,20 +6,16 @@
 
     <!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    
-    <!-- jQuery UI core CSS -->
-    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 
     <!-- Fonts do Google -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet"> 
 
-    <!-- Estilo próprio -->
+    <!-- Estilos próprios-->
     <link rel="stylesheet" href="assets/css/estilo.css">
     <link rel="stylesheet" href="assets/css/sliderRange.css">
-    <!-- <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="assets/css/multiple-select.css">
     
-    <title>Visualização da Verticalização</title>
+    <title>Verticalização IF Goiano</title>
 </head>
 <body>
 
@@ -36,9 +32,7 @@
         $visualizacoes = new Visualizacoes();
 
         $opcoesFiltro = $visualizacoes->opcoesFiltro();
-
-        // echo "<pre>";
-        // print_r(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));  
+  
         $anoMax = max(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));
         $anoMin = min(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));
 
@@ -210,7 +204,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td scope="row" colspan="8" class="align-middle text-center">Esperando resultados!</td>
+                                <td scope="row" colspan="14" class="align-middle text-center">Esperando resultados!</td>
                             </tr>
                         </tbody>
                     </table>
@@ -219,17 +213,15 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="assets/js/multiple-select.js"></script>
     <script src="assets/js/visualizacao.js"></script>
-
 </body>
 </html>

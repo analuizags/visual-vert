@@ -63,29 +63,14 @@ function enviarFormulario() {
 		unidades = [], 
 		areas = [];
 
-	campus.find(":selected").each(function() {
-		unidades.push($(this).text());
-	});
-
-	area.find(":selected").each(function() {
-		areas.push($(this).text());
-	});
-
-	let tb = {
-		unidades: unidades,
-		areas: areas
-	};
-
 	let dados = {
 		periodos: ano.text(),
 		sexo: sexo.val(),
 		codInstituicao: campus.val(),
-		codAreaConhecimento: area.val(),
-		// tabela: tb
+		codAreaConhecimento: area.val()
 	};
 
 	dados.acao = "Visualizacoes/filtrar";
-	// console.log(dados);
 
 	$('.loader-graficos').removeAttr('hidden');
 
@@ -97,13 +82,12 @@ function enviarFormulario() {
 		async: true,
 		success: function (result) {
 			res = JSON.parse(result);
-			// console.log(res)
 
 			if (res && (Object.keys(res).length) > 0) {
-				// let retorno = verificarTipo();
+				
 				gerarGrafico(res);
 				verificarFase(res.tabela);
-				// console.log(retorno);
+				
 			} else {
 				console.log("Não Deu Certo :(");
 			}
@@ -121,7 +105,6 @@ function verificarFase(dados) {
 				
 	if (tipo == 0) { // independente de tipo
 		gerarTabela(dados.independente);
-		// console.log(dados);
 		
 	} else if (tipo == 1) { // vert concluida
 		gerarTabela(dados.vertConcluida);

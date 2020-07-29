@@ -67,10 +67,6 @@ class Visualizacoes {
         $dados['anoLetInicio'] = $aux[0];
         $dados['anoLetAtual'] = $aux[1];
         unset($dados['periodos']);
-
-        // $linhasColunas = $dados['tabela'];
-        // $anos = [$aux[0], $aux[1]];
-        // unset($dados['tabela']);
         
         $campos = " a.codigo AS aluno";
         
@@ -241,7 +237,6 @@ class Visualizacoes {
         $visualizacao = new Visualizacao();
         
         foreach ($dados as $tipo => $unidades) { 
-            // print_r($unidades);    
             
             if (strpos($tipo, 'Concluida')) {
                 $busca['situacao'] = $situacoes['concluido'];   
@@ -257,29 +252,10 @@ class Visualizacoes {
                 $ano = 'anoLetInicio';
             }
 
-            
-            // $campos = " i.codigo AS codInstituicao,
-            //             ac.codigo AS codAreaConhecimento,
-            //             m.$ano AS ano,
-            //             count(m.$ano) AS qtde";
             $campos = " m.$ano AS ano,
-                        count(m.$ano) AS qtde";
+                        count(m.$ano) AS qtde";            
             
-            
-            $ordem = "i.codigo, ac.codigo, m.$ano";
-            
-            // $lista = $visualizacao->listar('porcentagem', $campos, $busca, $ordem);
-            // print_r($lista);
-            // $instituicoes = array_column($lista, 'codInstituicao');
-            // $area = array_column($lista, 'codAreaConhecimento');
-            // $ano = array_column($lista, 'ano');
-            // $qtde = array_column($lista, 'qtde');
-
-            // print_r($instituicoes);
-            // print_r($area);
-            // print_r($ano);
-            // print_r($qtde);
-            
+            $ordem = "i.codigo, ac.codigo, m.$ano";            
 
             foreach ($unidades as $unidade => $areas) {
                 foreach ($areas as $area => $anos) {
@@ -287,7 +263,6 @@ class Visualizacoes {
                     $busca['codAreaConhecimento'] = [$area];
                     
                     $lista = $visualizacao->listar('porcentagem', $campos, $busca, $ordem);
-                    // print_r($lista);
 
                     $ano = array_column($lista, 'ano');
                     $qtde = array_column($lista, 'qtde');
@@ -296,7 +271,6 @@ class Visualizacoes {
                         $a = array_search($key, $ano);
                         
                         if (isset($qtde[$a]) && !empty($qtde[$a]) && $qtde[$a] != 0) {
-                            // echo "$key: $a / $qtde[$a] * 100 <br>";
                             $dados[$tipo][$unidade][$area][$key] = round((($value/$qtde[$a])*100), 1); // cálculo
                         } else {
                             // $dados[$tipo][$unidade][$area][$key] = '#';
