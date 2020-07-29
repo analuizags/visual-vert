@@ -119,23 +119,23 @@ function verificarFase(dados) {
 	
 	let tipo = $('#faseVerticalizacao').find(":selected").val();
 				
-	if (tipo == 0) { // vert concluida
+	if (tipo == 0) { // independente de tipo
 		gerarTabela(dados.independente);
 		// console.log(dados);
 		
-	} else if (tipo == 1) { // vert nao concluida
+	} else if (tipo == 1) { // vert concluida
 		gerarTabela(dados.vertConcluida);
 		
-	} else if (tipo == 2) { // vert em fluxo
+	} else if (tipo == 2) { // vert nao concluida
 		gerarTabela(dados.vertNConcluida);
 		
-	} else if (tipo == 3) { // vert reingresso concluida
+	} else if (tipo == 3) { // vert em fluxo
 		gerarTabela(dados.vertFluxo);
 		
-	} else if (tipo == 4) { // vert reingresso nao concluida
+	} else if (tipo == 4) { // vert reingresso concluida
 		gerarTabela(dados.reingressoConcluida);
 		
-	} else if (tipo == 5){ // vert reingresso em fluxo
+	} else if (tipo == 5){ // vert reingresso nao concluida
 		gerarTabela(dados.reingressoNConcluida);
 
 	} else if (tipo == 6){ // vert reingresso em fluxo
@@ -157,7 +157,6 @@ function resetCanvas(){
 
 function gerarGrafico(dados) {
 
-	// var coresArea = [cores[1], cores[3], cores[5],cores[7],cores[9],cores[11],cores[12],cores[13],cores[14]];
 	var coresBarras = ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'];
 	var lbs = Object.keys(dados.barras.vert);
         
@@ -349,7 +348,7 @@ function gerarTabela(dados) {
 	for (let campus in dados) {
 		if (dados.hasOwnProperty(campus)) {
 
-			corpoTabela += '<tr><td scope="row" rowspan="' + Object.keys(dados[campus]).length + '" class="align-middle">' + campus + '</td>';
+			corpoTabela += '<tr><td scope="row" rowspan="' + Object.keys(dados[campus]).length + '" class="align-middle">' + codigoDescricao(campus, 'unidade') + '</td>';
 			let flag = false;
 
 			for (let area in dados[campus]) {
@@ -358,19 +357,13 @@ function gerarTabela(dados) {
 						corpoTabela += '<tr>';
 					}
 
-					if (area == 'zforaArea') {
-						corpoTabela += '<td class="align-middle">Áreas de conhecimento distintas</td>';
-					} else {
-						corpoTabela += '<td class="align-middle">' + area + '</td>';
-					}
+					corpoTabela += '<td class="align-middle">' + codigoDescricao(area, 'area') + '</td>';
 
 					for (let ano in dados[campus][area]) {
 						if (dados[campus][area].hasOwnProperty(ano)) {
-							corpoTabela += '<td>' + dados[campus][area][ano] + '</td>';
-							
+							corpoTabela += '<td>' + dados[campus][area][ano] + '</td>';							
 						}
 					}
-
 				}
 
 				corpoTabela += '</tr>';	
@@ -381,4 +374,87 @@ function gerarTabela(dados) {
 
 	$('table > tbody').empty();
 	$('table > tbody').append(corpoTabela);
+}
+
+function codigoDescricao(codigo, tipo) {
+	
+	if (tipo == 'unidade') {
+		switch (codigo) {
+			case '1':
+				return 'Campus Urutaí';
+				break;
+			case '2':
+				return 'Campus Rio Verde';
+				break;
+			case '3':
+				return 'Campus Ceres';
+				break;
+			case '4':
+				return 'Campus Morrinhos';
+				break;
+			case '5':
+				return 'Campus Iporá';
+				break;
+			case '6':
+				return 'Reitoria';
+				break;
+			case '8':
+				return 'Campus Cristalina';
+				break;
+			case '9':
+				return 'Campus Avançado Ipameri';
+				break;
+			case '10':
+				return 'Campus Avançado Catalão';
+				break;
+			case '11':
+				return 'Campus Avançado Hidrolândia';
+				break;
+			case '12':
+				return 'Campus Campos Belos';
+				break;
+			case '13':
+				return 'Campus Posse';
+				break;
+			case '14':
+				return 'Campus Trindade';
+				break;
+			default:
+				return 'Unidades de Ensino distintas';
+				break;
+		}
+	} else {
+		switch (codigo) {
+			case '10000003':
+				return 'Ciências Exatas e da Terra';
+				break;
+			case '20000006':
+				return 'Ciências Biológicas';
+				break;
+			case '30000009':
+				return 'Engenharias';
+				break;
+			case '40000001':
+				return 'Ciências da Saúde';
+				break;
+			case '50000004':
+				return 'Ciências Agrárias';
+				break;
+			case '60000007':
+				return 'Ciências Sociais Aplicadas';
+				break;
+			case '70000000':
+				return 'Ciências Humanas';
+				break;
+			case '80000002':
+				return 'Linguística, Letra e Artes';
+				break;
+			case '90000005':
+				return 'Multidisciplinar';
+				break;
+			default:
+				return 'Áreas de Conhecimento distintas';
+				break;
+		}
+	}
 }

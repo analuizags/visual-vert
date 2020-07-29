@@ -297,11 +297,12 @@ class Visualizacoes {
                         
                         if (isset($qtde[$a]) && !empty($qtde[$a]) && $qtde[$a] != 0) {
                             // echo "$key: $a / $qtde[$a] * 100 <br>";
-                            $dados[$tipo][$unidade][$area][$key] = round((($value/$qtde[$a])*100), 2); // calculo
+                            $dados[$tipo][$unidade][$area][$key] = round((($value/$qtde[$a])*100), 1); // cálculo
                         } else {
                             // $dados[$tipo][$unidade][$area][$key] = '#';
                         }
                     }
+
 
                 }
             }
