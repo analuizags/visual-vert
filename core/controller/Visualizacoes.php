@@ -62,7 +62,7 @@ class Visualizacoes {
 
     public function filtrar($dados) {
         $visualizacao = new Visualizacao();
-
+    
         $aux = explode(" - ", $dados['periodos']);
         $dados['anoLetInicio'] = $aux[0];
         $dados['anoLetAtual'] = $aux[1];

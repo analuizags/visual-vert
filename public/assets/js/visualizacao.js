@@ -17,7 +17,7 @@ var res = 0;
 		animate: 'slide'
 	});
 
-	// $(document).ready(enviarFormulario());
+	$(document).ready(enviarFormulario());
 	
 	$('#formulario-filtros').on('submit', function (e) {
 		e.preventDefault();
@@ -29,7 +29,6 @@ var res = 0;
 			verificarFase(res.tabela);
 		}, 1500)	
 	});
-
 
 	// range slider
 	$(function() {	
@@ -56,18 +55,20 @@ var res = 0;
 }());
 
 function enviarFormulario() {
-	let ano = $('.intervalo-ano'),
-		sexo = $('#sexo'),
-		campus = $('#campus'),
-		area = $('#area'),
-		unidades = [], 
-		areas = [];
+	let ano = $('.intervalo-ano').text(),
+		sexo = $('#sexo').val(),
+		campus = $('#campus').val(),
+		area = $('#area').val();
+
+	if (ano == "") {
+		ano = $(".intervalo-ano").attr("data-min") + ' - ' + $(".intervalo-ano").attr("data-max");
+	}
 
 	let dados = {
-		periodos: ano.text(),
-		sexo: sexo.val(),
-		codInstituicao: campus.val(),
-		codAreaConhecimento: area.val()
+		periodos: ano,
+		sexo: sexo,
+		codInstituicao: campus,
+		codAreaConhecimento: area
 	};
 
 	dados.acao = "Visualizacoes/filtrar";
