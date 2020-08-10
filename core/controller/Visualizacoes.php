@@ -2,9 +2,9 @@
 
 namespace core\controller;
 
-use core\model\Visualizacao;
-
 require_once "../core/crud/CRUD.php";
+
+use core\model\Visualizacao;
 
 class Visualizacoes {
 

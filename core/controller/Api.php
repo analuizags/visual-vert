@@ -2,6 +2,9 @@
 
 namespace core\controller;
 
+require_once "../core/controller/Visualizacoes.php";    
+require_once "../core/model/Visualizacao.php";
+
 use core\sistema\Requisicao;
 
 class Api {
