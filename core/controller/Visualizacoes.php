@@ -34,7 +34,7 @@ class Visualizacoes {
      * Listar opções de filtragem
      *
      * Períodos, Gênero, Instituição e Área de Conhecimento
-     *  $campos = null, $busca = [], $ordem = null
+     * $campos = null, $busca = [], $ordem = null
      * @return array
      */
     public function opcoesFiltro() {
@@ -87,7 +87,7 @@ class Visualizacoes {
                     i.codigo AS codInstituicao,
                     i.descricao AS descInstituicao";
         
-        $ordem = "a.codigo, m.anoLetInicio, m.anoLetConclusao";
+        $ordem = "a.codigo, c.nivel, m.anoLetInicio, m.anoLetConclusao, m.anoLetAtual";
 
         $lista = $visualizacao->listar(null, $campos, $dados, $ordem);
 
@@ -102,6 +102,7 @@ class Visualizacoes {
         return json_encode($resultado);
     } 
 
+    // setar um determinado valor em um determinado array
     public function setArray($estrutura, $valor) {
         foreach ($estrutura as $key => $value) {
             $estrutura[$key] = $valor;
@@ -116,9 +117,9 @@ class Visualizacoes {
         unset($filtros['aluno']);
 
         $situacoes = [
-            'concluido' => array(5, 6, 12, 13, 15, 18, 19, 23, 24),
-            'matriculado' => array(0, 14, 16, 21),
-            'evadido' => array(2, 3, 4, 7, 8, 9, 10, 11, 20, 22)
+            'concluido' => [5, 6, 12, 13, 15, 18, 19, 23, 24],
+            'matriculado' => [0, 14, 16, 21],
+            'evadido' => [2, 3, 4, 7, 8, 9, 10, 11, 20, 22]
         ];
 
         // resposta padrão
@@ -133,6 +134,8 @@ class Visualizacoes {
         $resultado = array( 'linhas' => $arrayLinhas, 'barras' => $arrayBarras, 'pizzas' => $arrayPizzas );
 
         $alunos = array_column($dados, 'aluno'); // pega a key especifica em cada objeto dentro do array
+
+        $teste = [];
         
         foreach ($codigos as $key => $value) {
 
@@ -149,10 +152,13 @@ class Visualizacoes {
                     
                     if ($dadosAluno[$i]->nivelCurso < $dadosAluno[$j]->nivelCurso) { // se subir de nível
                         
-                        if (in_array($dadosAluno[$i]->situacao, $situacoes['concluido'])) {
+                        $anoI = $dadosAluno[$i]->anoLetConclusao != "" ? $dadosAluno[$i]->anoLetConclusao : $dadosAluno[$i]->anoLetAtual;
+                        $anoJ = $dadosAluno[$j]->anoLetConclusao != "" ? $dadosAluno[$j]->anoLetConclusao : $dadosAluno[$j]->anoLetAtual;
 
-                            $tipo = "vert";
-                            
+                        if (in_array($dadosAluno[$i]->situacao, $situacoes['concluido']) && $anoJ < $anoI) {
+
+                            $tipo = "vert";                            
+
                             if (in_array($dadosAluno[$j]->situacao, $situacoes['concluido'])) {                                 
                                 $fase = "Concluida"; // Verticalização Concluída
                             } elseif (in_array($dadosAluno[$j]->situacao, $situacoes['matriculado'])) {
@@ -161,7 +167,7 @@ class Visualizacoes {
                                 $fase = "NConcluida"; // Verticalização Não Concluída
                             }
                             
-                        } elseif (in_array($dadosAluno[$i]->situacao, $situacoes['evadido'])) {
+                        } elseif (in_array($dadosAluno[$i]->situacao, $situacoes['evadido']) && $anoJ < $anoI) {
 
                             $tipo = "reingresso";
                             
@@ -174,7 +180,7 @@ class Visualizacoes {
                             }
                             
                         } else {
-                            break;
+                            break; // primeiro curso em andamento não se classifica como verticalização
                         }
                         
                         if ($fase == 'Concluida') {
@@ -223,7 +229,8 @@ class Visualizacoes {
                         $resultado['linhas'][$fase][$ano]++;
                         $resultado['barras'][$tipo][$ano]++;
                         $resultado['pizzas'][$tipo][$fase]++;
-                    }
+                    
+                    } 
                 }
             }
         }

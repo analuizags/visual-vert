@@ -157,5 +157,3 @@ class Visualizacao extends CRUD {
     }
 
 }
-
-?>
