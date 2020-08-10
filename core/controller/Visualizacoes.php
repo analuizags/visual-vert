@@ -134,10 +134,23 @@ class Visualizacoes {
                     
                     if ($dadosAluno[$i]->nivelCurso < $dadosAluno[$j]->nivelCurso) { // se subir de nível
                         
-                        $anoI = $dadosAluno[$i]->anoLetConclusao != "" ? $dadosAluno[$i]->anoLetConclusao : $dadosAluno[$i]->anoLetAtual;
-                        $anoJ = $dadosAluno[$j]->anoLetConclusao != "" ? $dadosAluno[$j]->anoLetConclusao : $dadosAluno[$j]->anoLetAtual;
+                        if ($dadosAluno[$i]->anoLetConclusao != "") {
+                            $anoI = $dadosAluno[$i]->anoLetConclusao;
+                        } elseif ($dadosAluno[$i]->anoLetAtual != "") {
+                            $anoI = $dadosAluno[$i]->anoLetAtual;
+                        } else {
+                            $anoI = $dadosAluno[$i]->anoLetInicio;
+                        }
 
-                        if (in_array($dadosAluno[$i]->situacao, $situacoes['concluido']) && $anoJ < $anoI) {
+                        if ($dadosAluno[$j]->anoLetConclusao != "") {
+                            $anoJ = $dadosAluno[$j]->anoLetConclusao;
+                        } elseif ($dadosAluno[$j]->anoLetAtual != "") {
+                            $anoJ = $dadosAluno[$j]->anoLetAtual;
+                        } else {
+                            $anoJ = $dadosAluno[$j]->anoLetInicio;
+                        }                        
+
+                        if (in_array($dadosAluno[$i]->situacao, $situacoes['concluido']) && $anoI < $anoJ) {
 
                             $tipo = "vert";                            
 
@@ -149,7 +162,7 @@ class Visualizacoes {
                                 $fase = "NConcluida"; // Verticalização Não Concluída
                             }
                             
-                        } elseif (in_array($dadosAluno[$i]->situacao, $situacoes['evadido']) && $anoJ < $anoI) {
+                        } elseif (in_array($dadosAluno[$i]->situacao, $situacoes['evadido']) && $anoI < $anoJ) {
 
                             $tipo = "reingresso";
                             
