@@ -19,7 +19,6 @@ class Visualizacoes {
     private $descAreaConhecimento = null;
     private $codInstituicao = null;
     private $descInstituicao = null;
-    private $listaVisualizacao = [];
 
     public function __set($atributo, $valor) {
         $this->$atributo = $valor;
@@ -31,33 +30,18 @@ class Visualizacoes {
 
 
     /**
-     * Listar opções de filtragem
+     * Listar opções de períodos
      *
-     * Períodos, Gênero, Instituição e Área de Conhecimento
+     * Anos
      * $campos = null, $busca = [], $ordem = null
      * @return array
      */
-    public function opcoesFiltro() {
+    public function listarPeriodo() {
         $visualizacao = new Visualizacao();
 
         $lista = $visualizacao->listar('filtro', 'anoLetInicio', null, null);
-        $this->__set("periodos", $lista);
 
-        $lista = $visualizacao->listar('filtro', 'sexo', null, null);
-        $this->__set("generos", $lista);
-
-        $lista = $visualizacao->listar('filtro', 'instituicao', null, null);
-        $this->__set("instituicoes", $lista);
-
-        $lista = $visualizacao->listar('filtro', 'areaConhecimento', null, null);
-        $this->__set("areas", $lista);
-
-        return [
-            "periodos" => $this->periodos,
-            "generos" => $this->generos,
-            "instituicoes" => $this->instituicoes,
-            "areas" => $this->areas
-        ];
+        return $lista;
     }
 
     public function filtrar($dados) {
@@ -96,8 +80,6 @@ class Visualizacoes {
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }
-
-        // $this->__set("listaVisualizacao", $resultado);
         
         return json_encode($resultado);
     } 

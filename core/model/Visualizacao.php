@@ -7,29 +7,28 @@ use Exception;
 
 class Visualizacao extends CRUD {
 
-    const TABELA = "vertGraficos";
+    const TABELA = "matricula";
     const COL_MATRICULA_COD = "codigo";
     const COL_ALUNO_COD = "aluno";
-    const COL_SEXO_DESC = "sexo";
+    const COL_SEXO = "sexo";
+    const COL_SITUACAO = "situacao";
     const COL_ANO_INICIO = "anoLetInicio";
     const COL_ANO_CONCLUSAO = "anoLetConclusao";
+    const COL_ANO_ATUAL = "anoLetAtual";
     const COL_CURSO_COD = "codCurso";
     const COL_CURSO_DESC = "descCurso";
     const COL_AREA_COD = "codAreaConhecimento";
     const COL_AREA_DESC = "descAreaConhecimento";
     const COL_INSTITUICAO_COD = "codInstituicao";
     const COL_INSTITUICAO_DESC = "descInstituicao";
+    const LIMIT_ANO_INICIO = 2009;
+    const LIMIT_ANO_ATUAL = 2020;
 
     /**
      * @param assunto da pesquisa, campos da tabela, filtros de busca, ordem da seleção
      * @return array
      */
     public function listar($assunto = null, $campos = null, $busca = [], $ordem = null) {
-
-        if ($campos == 'curso' || $campos == 'areaConhecimento' || $campos == 'instituicao') {
-            $ordem = " desc".ucfirst($campos);
-            $campos = "cod".ucfirst($campos).", desc".ucfirst($campos)." ";
-        }
         
         $campos = $campos != null ? $campos : "*";
         $whereCondicao = "1 = 1";
@@ -37,7 +36,7 @@ class Visualizacao extends CRUD {
 
         // GROUP BY
         if ($assunto == 'codigos') {
-            $groupBy = " aluno HAVING count(aluno) > 1 ";
+            $groupBy = self::COL_ALUNO_COD . " HAVING count(" . self::COL_ALUNO_COD . ") > 1 ";
         } elseif ($assunto == 'porcentagem') {
             $groupBy = $ordem;
         } else {
@@ -46,8 +45,8 @@ class Visualizacao extends CRUD {
 
         if ($campos == 'anoLetInicio') {
             $whereCondicao .= " AND " . self::COL_ANO_INICIO . " >= ?";
-            $whereValor[] = '2009';
-            $ordem = "anoLetInicio";
+            $whereValor[] = self::LIMIT_ANO_INICIO;
+            $ordem = self::COL_ANO_INICIO;
         }
 
         // TABELA e/ou INNER JOIN
@@ -55,7 +54,7 @@ class Visualizacao extends CRUD {
             $campos = "DISTINCT $campos";
             $tabela = self::TABELA;
         } else {
-            $tabela = " matricula m
+            $tabela =  self::TABELA . " m
                         INNER JOIN aluno a ON m.aluno = a.codigo
                         INNER JOIN curso c ON m.curso = c.codigo
                         INNER JOIN areaConhecimento ac ON c.areaConhecimento = ac.codigo
@@ -65,19 +64,19 @@ class Visualizacao extends CRUD {
         // WHERE
         if (count((array)$busca) > 0) {
             if (isset($busca['anoLetInicio']) && !empty($busca['anoLetInicio'])) {
-                $whereCondicao .= " AND m.anoLetInicio >= ? ";
+                $whereCondicao .= " AND m." . self::COL_ANO_INICIO . " >= ? ";
                 $whereValor[] = $busca['anoLetInicio'];
             } else {
-                $whereCondicao .= " AND m.anoLetInicio >= ? ";
-                $whereValor[] = 2009;
+                $whereCondicao .= " AND m." . self::COL_ANO_INICIO . " >= ? ";
+                $whereValor[] = self::LIMIT_ANO_INICIO;
             }
 
             if (isset($busca['anoLetAtual']) && !empty($busca['anoLetAtual'])) {
-                $whereCondicao .= " AND m.anoLetAtual <= ? ";
+                $whereCondicao .= " AND m." . self::COL_ANO_ATUAL . " <= ? ";
                 $whereValor[] = $busca['anoLetAtual'];
             } else {
-                $whereCondicao .= " AND m.anoLetAtual <= ? ";
-                $whereValor[] = 2020;
+                $whereCondicao .= " AND m." . self::COL_ANO_ATUAL . " <= ? ";
+                $whereValor[] = self::LIMIT_ANO_ATUAL;
             }
 
             if (isset($busca['codAreaConhecimento']) && !empty($busca['codAreaConhecimento']) && count($busca['codAreaConhecimento']) != 7) {
@@ -129,7 +128,7 @@ class Visualizacao extends CRUD {
             }
 
             if (isset($busca['situacao']) && !empty($busca['situacao'])) {
-                $whereCondicao .= " AND m.situacao IN (";
+                $whereCondicao .= " AND m." . self::COL_SITUACAO . " IN (";
 
                 for ($i=0; $i < count($busca['situacao'])-1; $i++) { 
                     $whereCondicao .= "?, ";

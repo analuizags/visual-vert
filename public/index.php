@@ -25,16 +25,26 @@
         // require_once 'header.php';
         require_once "../core/controller/Visualizacoes.php";
         require_once "../core/model/Visualizacao.php";
-        require_once "../core/crud/CRUD.php";
+        require_once "../core/controller/Unidades.php";
+        require_once "../core/model/Unidade.php";
+        require_once "../core/controller/AreaConhecimentos.php";
+        require_once "../core/model/AreaConhecimento.php";
+
 
         use core\controller\Visualizacoes;
+        use core\controller\Unidades;
+        use core\controller\AreaConhecimentos;
 
-        $visualizacoes = new Visualizacoes();
+        $visualizacao = new Visualizacoes();
+        $unidade = new Unidades();
+        $areaConhecimento = new AreaConhecimentos();
 
-        $opcoesFiltro = $visualizacoes->opcoesFiltro();
+        $unidades = $unidade->listarUnidades();
+        $areaConhecimentos = $areaConhecimento->listarAreas();
+        $periodos = $visualizacao->listarPeriodo();
   
-        $anoMax = max(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));
-        $anoMin = min(array_column($opcoesFiltro["periodos"], 'anoLetInicio'));
+        $anoMax = max(array_column($periodos, 'anoLetInicio'));
+        $anoMin = min(array_column($periodos, 'anoLetInicio'));
 
     ?>
 
@@ -103,9 +113,9 @@
                                     <label class="ml-1">Unidade de Ensino</label><br>
                                     <select data-placeholder="Escolha o campus" class="mp-select" id="campus" multiple="multiple">
                                         <?php 
-                                            if (count((array)$opcoesFiltro["instituicoes"][0]) > 0) {
-                                                foreach ($opcoesFiltro["instituicoes"] as $key => $value) {
-                                                    echo "<option value='$value->codInstituicao' selected>$value->descInstituicao</option>";
+                                            if (count((array)$unidades) > 0) {
+                                                foreach ($unidades as $key => $value) {
+                                                    echo "<option value='$value->codigo' selected>$value->descricao</option>";
                                                 }
                                             }
                                         ?>
@@ -117,9 +127,9 @@
                                     <label class="ml-1">Área do Conhecimento</label><br>
                                     <select data-placeholder="Escolha a área" class="mp-select" id="area" multiple="multiple">
                                         <?php 
-                                            if (count((array)$opcoesFiltro["areas"][0]) > 0) {
-                                                foreach ($opcoesFiltro["areas"] as $key => $value) {
-                                                    echo "<option value='$value->codAreaConhecimento' selected>$value->descAreaConhecimento</option>";
+                                            if (count((array)$areaConhecimentos) > 0) {
+                                                foreach ($areaConhecimentos as $key => $value) {
+                                                    echo "<option value='$value->codigo' selected>$value->descricao</option>";
                                                 }
                                             }
                                         ?>
