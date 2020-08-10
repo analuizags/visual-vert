@@ -73,6 +73,7 @@ function enviarFormulario() {
 
 	dados.acao = "Visualizacoes/filtrar";
 
+	resetCanvas();
 	$('.loader-graficos').removeAttr('hidden');
 
 	$.ajax({
