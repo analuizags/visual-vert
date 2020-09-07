@@ -126,6 +126,27 @@ body {
     scroll-margin-top: 50px;
 }
 
+.card-body > p {
+    font-size: 1.04em;
+}
+
+.card-body > ul > li {
+    line-height: 1.8;
+}
+
+.card-body > ul > li > span {
+    font-weight: 600;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3px;
+    padding: 3px;
+}
+
+.fonte > small > a {
+    text-decoration: none;
+}
+
+/* Ribbon */
+
 .ribbon {
     background: rgb(82, 82, 82);
     border-radius: 3px 1.5px 0px 3px;
