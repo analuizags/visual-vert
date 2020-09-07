@@ -115,6 +115,65 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.titulo-contato {
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0px 4px rgba(1, 117, 1, 0.8);
+}
+
+a.marcador-texto {
+    text-decoration: none;
+    color: inherit;
+}
+
+.tecnologias {
+    list-style: none;
+}
+
+.tecnologias > li::before {
+    content: "•"; 
+    margin-right: 10px;
+    color: rgba(1, 117, 1, 0.8);
+}
+
+.nome {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2em;
+}
+
+.funcao {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.3em;
+}
+
+.quadro {
+    border: 2px #333 solid;
+    border-radius: 2px;
+    box-shadow: 5px -5px #333;
+}
+
+.avatar img {
+    clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
+    height: 185px;
+    width: 185px;
+    object-fit: cover;
+    /* filter: grayscale(100%); */
+}
+
+.marcador-texto {
+    padding: 1px 3px 1px 3px;
+    border-radius: 1.5px;
+    background-color: rgba(1, 117, 1, 0.8);
+}
+
+.icones-contato > div > a {
+    color: rgba(1, 117, 1, 0.8);
+}
+
+.icones-contato > div > a:active,
+.icones-contato > div > a:hover {
+    color: rgb(1, 82, 1);
+}
+
 .loader-graficos {
     position: absolute; 
     margin-top: 30%; 
