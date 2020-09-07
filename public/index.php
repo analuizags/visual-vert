@@ -1,5 +1,28 @@
 <?php
     require_once 'header.php';
+    require_once '../config.php';
+    require_once "../core/controller/AreaConhecimentos.php";
+    require_once "../core/model/AreaConhecimento.php";
+    require_once "../core/controller/Visualizacoes.php";
+    require_once "../core/model/Visualizacao.php";
+    require_once "../core/controller/Unidades.php";
+    require_once "../core/model/Unidade.php";
+
+
+    use core\controller\AreaConhecimentos;
+    use core\controller\Visualizacoes;
+    use core\controller\Unidades;
+    
+    $areaConhecimento = new AreaConhecimentos();
+    $visualizacao = new Visualizacoes();
+    $unidade = new Unidades();
+
+    $areaConhecimentos = $areaConhecimento->listarAreas();
+    $periodos = $visualizacao->listarPeriodo();
+    $unidades = $unidade->listarUnidades();
+
+    $anoMax = max(array_column($periodos, 'anoLetInicio'));
+    $anoMin = min(array_column($periodos, 'anoLetInicio'));
 ?>
 
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
