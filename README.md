@@ -1,8 +1,10 @@
 # Visual-vert
-Sistema de visualização de dados sobre verticalização de ensino do IF Goiano
+Sistema de visualização de informações acerca da pesquisa sobre verticalização de ensino do IF Goiano. Principal objetivo é deixar a sociedade a par dos números da verticalização de cada *campi* do IF Goiano.
+
+![Página Inicial](/public/assets/imagens/layoutInicial.png)
 
 ## Configuração inicial
-Para configurar a conexão com o banco de dados, é necessário criar o arquivo `config-dev.json`.
+Para configurar a conexão com o banco de dados, é necessário criar o arquivo `config-dev.json`, adicionando credenciais válidas.
 ```json
 {
   "database": {
@@ -16,8 +18,15 @@ Para configurar a conexão com o banco de dados, é necessário criar o arquivo 
 ```
 
 ## Tecnologia utilizadas
-* Bootstrap 4.5
 * jQuery 3.4
+* jQuery-ui 1.12
 * Chartjs 2.7
-* PHP 7.2 
 * MySQL 5.7 
+* Bootstrap 4.5
+* Feather Icons 4.9
+
+---
+
+<p align="center">
+    Desenvolvido com :heart: por <b>Ana Luiza</b>
+</p>
