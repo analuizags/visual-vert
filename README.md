@@ -3,6 +3,11 @@ Sistema de visualização de informações acerca da pesquisa sobre verticaliza�
 
 ![Página Inicial](/public/assets/imagens/layoutInicial.png)
 
+![](https://img.shields.io/github/issues/analuizags/visual-vert)
+![](https://img.shields.io/github/forks/analuizags/visual-vert)
+![](https://img.shields.io/github/stars/analuizags/visual-vert)
+![](https://img.shields.io/github/license/analuizags/visual-vert)
+
 ## Configuração inicial
 Para configurar a conexão com o banco de dados, é necessário criar o arquivo `config-dev.json`, adicionando credenciais válidas.
 ```json
@@ -16,6 +21,18 @@ Para configurar a conexão com o banco de dados, é necessário criar o arquivo 
   }
 }
 ```
+
+
+### Configurando o Docker 🐳
+
+#### Iniciando os containers
+
+```bash
+$ docker-compose up -d
+```
+
+#### Após a execução dos comandos, o servidor estará disponível em [localhost/](http://localhost/)
+
 
 ## Tecnologia utilizadas
 * jQuery 3.4
